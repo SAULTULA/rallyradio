@@ -1,11 +1,11 @@
 ﻿/**
- * admin.js â€” Panel de Control completo
- * GestiÃ³n de Banners y Clima via Google Apps Script
+ * admin.js — Panel de Control completo
+ * Gestión de Banners y Clima via Google Apps Script
  */
 
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyIrGb5p9N9Ek7CVsrByscevLaafW_yGk59zRvsE6q5aynLEqauDIhbPKqxMO99qGk/exec';
 
-// Credenciales en sesiÃ³n (no se guardan en localStorage por seguridad)
+// Credenciales en sesión (no se guardan en localStorage por seguridad)
 let SESSION = { usuario: '', password: '' };
 
 // ==========================================
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, false);
   }
 
-  // Si hay sesiÃ³n guardada en la pestaÃ±a actual
+  // Si hay sesión guardada en la pestaña actual
   if (sessionStorage.getItem('admin_logged_in') === 'true') {
     SESSION.usuario  = sessionStorage.getItem('admin_u') || '';
     SESSION.password = sessionStorage.getItem('admin_p') || '';
@@ -89,7 +89,7 @@ async function handleLogin(e) {
       showLoginError(data.error || 'Credenciales incorrectas');
     }
   } catch {
-    showLoginError('Error de conexion. VerificÃ¡ tu conexiÃ³n a internet.');
+    showLoginError('Error de conexion. Verificá tu conexión a internet.');
   } finally {
     btn.textContent = 'Ingresar al Panel';
     btn.disabled = false;
@@ -138,13 +138,13 @@ function previewImage(url) {
     img.onerror = () => {
       img.style.display = 'none';
       hint.style.display = '';
-      hint.textContent = 'âš ï¸ No se pudo cargar la imagen. VerificÃ¡ la URL.';
+      hint.textContent = '⚠️ No se pudo cargar la imagen. Verificá la URL.';
       box.style.borderColor = '#e30613';
     };
   } else {
     img.style.display = 'none';
     hint.style.display = '';
-    hint.textContent = 'La imagen aparecerÃ¡ aquÃ­ al pegar la URL';
+    hint.textContent = 'La imagen aparecerá aquí al pegar la URL';
     box.style.borderColor = '#2a2a2a';
   }
 }
@@ -198,7 +198,7 @@ async function cargarBanners() {
   try {
     const data = await apiGet('getBanners');
     if (!data.ok || !data.banners || data.banners.length === 0) {
-      list.innerHTML = '<p class="empty-state">No hay banners cargados aÃºn.</p>';
+      list.innerHTML = '<p class="empty-state">No hay banners cargados aún.</p>';
       return;
     }
     renderBannerList(data.banners);
@@ -206,7 +206,6 @@ async function cargarBanners() {
     list.innerHTML = '<p class="empty-state" style="color:#e30613">Error al cargar banners.</p>';
   }
 }
-
 
 function driveThumb(url) {
   if (!url) return '';
@@ -266,33 +265,33 @@ async function handleSaveBanner(e) {
     active:    true
   };
 
-  if (!payload.titulo) { showToast('El tÃ­tulo es obligatorio.', 'error'); btn.disabled=false; btn.textContent='ðŸ’¾ Guardar Banner'; return; }
-  if (!payload.imagenUrl && !payload.imagenBase64) { showToast('Debes proveer una URL o subir una imagen.', 'error'); btn.disabled=false; btn.textContent='ðŸ’¾ Guardar Banner'; return; }
+  if (!payload.titulo) { showToast('El título es obligatorio.', 'error'); btn.disabled=false; btn.textContent='💾 Guardar Banner'; return; }
+  if (!payload.imagenUrl && !payload.imagenBase64) { showToast('Debes proveer una URL o subir una imagen.', 'error'); btn.disabled=false; btn.textContent='💾 Guardar Banner'; return; }
 
   try {
     const data = await apiPost(payload);
     if (data.ok) {
-      showToast('âœ… Banner guardado correctamente.', 'success');
+      showToast('✅ Banner guardado correctamente.', 'success');
       limpiarFormBanner();
       cargarBanners();
     } else {
-      showToast('âŒ ' + (data.error || 'Error al guardar'), 'error');
+      showToast('❌ ' + (data.error || 'Error al guardar'), 'error');
     }
   } catch {
-    showToast('âŒ Error de conexion.', 'error');
+    showToast('❌ Error de conexion.', 'error');
   } finally {
     btn.disabled = false;
-    btn.textContent = 'ðŸ’¾ Guardar Banner';
+    btn.textContent = '💾 Guardar Banner';
   }
 }
 
 async function eliminarBanner(posicion) {
-  if (!confirm(`Â¿Eliminar el Banner #${posicion}?`)) return;
+  if (!confirm(`¿Eliminar el Banner #${posicion}?`)) return;
   try {
     const data = await apiPost({ action: 'deleteBanner', usuario: SESSION.usuario, password: SESSION.password, posicion });
-    if (data.ok) { showToast('ðŸ—‘ Banner eliminado.', 'success'); cargarBanners(); }
-    else showToast('âŒ ' + (data.error || 'Error'), 'error');
-  } catch { showToast('âŒ Error de conexion.', 'error'); }
+    if (data.ok) { showToast('🗑️ Banner eliminado.', 'success'); cargarBanners(); }
+    else showToast('❌ ' + (data.error || 'Error'), 'error');
+  } catch { showToast('❌ Error de conexion.', 'error'); }
 }
 
 function limpiarFormBanner() {
@@ -309,7 +308,7 @@ async function cargarClima() {
   try {
     const data = await apiGet('getClima');
     if (!data.ok || !data.clima || data.clima.length === 0) {
-      list.innerHTML = '<p class="empty-state">No hay ciudades cargadas aÃºn.</p>';
+      list.innerHTML = '<p class="empty-state">No hay ciudades cargadas aún.</p>';
       return;
     }
     renderClimaList(data.clima);
@@ -322,12 +321,12 @@ function renderClimaList(ciudades) {
   const list = document.getElementById('climaList');
   list.innerHTML = ciudades.map(c => `
     <div class="clima-item">
-      <span class="clima-item__icon">ðŸŒ¤ï¸</span>
+      <span class="clima-item__icon">🌤️</span>
       <div class="clima-item__info">
-        <div class="clima-item__ciudad">ðŸ“ ${esc(c.ciudad)}</div>
-        <div class="clima-item__data">AutomÃ¡tico vÃ­a OpenWeatherMap</div>
+        <div class="clima-item__ciudad">📍 ${esc(c.ciudad)}</div>
+        <div class="clima-item__data">Automático vía OpenWeatherMap</div>
       </div>
-      <button class="clima-item__del" onclick="eliminarClima('${esc(c.ciudad)}')">ðŸ—‘</button>
+      <button class="clima-item__del" onclick="eliminarClima('${esc(c.ciudad)}')">🗑️</button>
     </div>
   `).join('');
 }
@@ -369,7 +368,7 @@ async function handleSaveClima(e) {
     btn.disabled = false;
     btn.textContent = 'Agregar Ciudad';
   }
-}}
+}
 
 async function eliminarClima(ciudad) {
   if (!confirm(`¿Eliminar "${ciudad}" del clima?`)) return;
@@ -379,10 +378,9 @@ async function eliminarClima(ciudad) {
     else showToast('[Error] ' + (data.error || 'Error'), 'error');
   } catch { showToast('[Error] Error de conexion.', 'error'); }
 }
-}
 
 function limpiarFormClima() {
-  document.getElementById('formClima').reset();
+  document.getElementById('formFormClima')?.reset() || document.getElementById('formClima').reset();
 }
 
 // ==========================================
@@ -420,4 +418,3 @@ function showToast(msg, type = 'success') {
 function esc(str) {
   return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
