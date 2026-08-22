@@ -1,9 +1,10 @@
-/* banners.module.css - Banners Premium BEM */
+/* banners.module.css - Banners BEM con caption externo */
 
+/* ── Contenedor lista ─────────────────────────────────── */
 .banners {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
 }
 
@@ -14,96 +15,90 @@
   padding: 20px 0;
 }
 
+/* ── Tarjeta banner ───────────────────────────────────── */
 .banner {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-decoration: none;
+  border-radius: 10px;
   overflow: hidden;
-  position: relative;
-  min-height: 120px;
+  text-decoration: none;
+  border: 1px solid #2a2a2a;
+  background-color: var(--color-surface, #141418);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .banner:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.5);
 }
 
-/* Imagen de fondo si el banner tiene imagen */
+/* ── Imagen ───────────────────────────────────────────── */
+.banner__media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
 .banner__img {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 1;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
+  display: block;
+  transition: transform 0.35s ease, opacity 0.25s ease;
+  opacity: 0.85;
 }
 
 .banner:hover .banner__img {
+  transform: scale(1.03);
   opacity: 1;
 }
 
-/* Contenido sobre la imagen o color */
-.banner__content {
-  position: relative;
-  z-index: 2;
+/* ── Caption (fuera de la imagen) ────────────────────── */
+.banner__caption {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  background: rgba(0, 0, 0, 0.6); /* Para que el texto sea legible sobre imágenes */
-  padding: 10px 16px;
-  border-radius: 8px;
-  backdrop-filter: blur(4px);
+  gap: 3px;
+  padding: 8px 10px;
+  background: #111;
 }
 
-/* ========================================================
-   MODIFICADORES
-   ======================================================== */
-
-/* Banner Destacado (Amarillo/Rojo) */
-.banner--destacado {
-  background: linear-gradient(135deg, #e30613 0%, #990000 100%);
-  border: 2px solid #fbbf24; /* Borde amarillo */
-}
-
-.banner--destacado .banner__content {
-  background: transparent;
-  backdrop-filter: none;
-}
-
-.banner--destacado .banner__title {
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.banner--destacado .banner__subtitle {
-  color: #fbbf24;
-  font-size: 0.9rem;
-}
-
-/* Banner Normal (Gris Oscuro con borde rojo punteado) */
-.banner--normal {
-  background-color: var(--color-surface, #141418);
-  border: 1px dashed #e30613; /* Borde rojo punteado como en el diseño */
-}
-
-.banner--normal .banner__title {
-  color: #fff;
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-.banner--normal .banner__subtitle {
-  color: #a1a1aa;
+.banner__caption-title {
   font-size: 0.8rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.banner__caption-url {
+  font-size: 0.65rem;
+  color: var(--rally-red, #e30613);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Modificadores ────────────────────────────────────── */
+.banner--destacado {
+  border: 2px solid #fbbf24;
+}
+
+.banner--destacado .banner__caption {
+  background: linear-gradient(135deg, #1a0000 0%, #2a0000 100%);
+}
+
+.banner--destacado .banner__caption-title {
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.banner--destacado .banner__caption-url {
+  color: #fbbf24;
+}
+
+.banner--normal {
+  border: 1px dashed #e30613;
 }

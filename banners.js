@@ -1,4 +1,4 @@
-﻿/**
+/**
  * banners.js
  * MÃ³dulo para consumir Banners desde Google Apps Script (Backend)
  */
@@ -26,19 +26,25 @@ const BannersWidget = (() => {
         const isDestacado = String(b.tipo).toLowerCase() === 'destacado';
         const modifier = isDestacado ? 'banner--destacado' : 'banner--normal';
         const url = b.enlaceUrl || '#';
-        
-        let imgHtml = '';
-        if (b.imagenUrl) {
-          imgHtml = `<img src="${esc(driveThumb(b.imagenUrl))}" class="banner__img" alt="Publicidad">`;
-        }
+
+        const imgHtml = b.imagenUrl
+          ? `<div class="banner__media">
+               <img src="${esc(driveThumb(b.imagenUrl))}" class="banner__img" alt="${esc(b.titulo || 'Publicidad')}">
+             </div>`
+          : '';
+
+        const captionHtml = `
+          <div class="banner__caption">
+            <span class="banner__caption-title">${esc(b.titulo || 'Anuncio')}</span>
+            ${b.enlaceUrl
+              ? `<span class="banner__caption-url">${esc(b.enlaceUrl)}</span>`
+              : ''}
+          </div>`;
 
         return `
-          <a href="${esc(url)}" class="banner ${modifier}" target="_blank" rel="noopener" style="text-decoration:none; display:block; text-align:center;">
+          <a href="${esc(url)}" class="banner ${modifier}" target="_blank" rel="noopener">
             ${imgHtml}
-            <div class="banner__clean-title" style="padding: 8px; font-size: 0.9rem; color: #fff; background: rgba(0,0,0,0.5); border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
-              ${esc(b.titulo || 'Anuncio')}
-              ${b.enlaceUrl ? '<br><small style="color:#e30613; font-weight:bold;">Visitar Web &rarr;</small>' : ''}
-            </div>
+            ${captionHtml}
           </a>
         `;
       }).join('');
