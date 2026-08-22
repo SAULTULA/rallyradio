@@ -22,7 +22,7 @@ const BannersWidget = (() => {
         return;
       }
 
-      const html = data.banners.map(b => {
+      const html = data.banners.map((b, index) => {
         const isDestacado = String(b.tipo).toLowerCase() === 'destacado';
         const modifier = isDestacado ? 'banner--destacado' : 'banner--normal';
         const url = b.enlaceUrl || '#';
@@ -41,12 +41,18 @@ const BannersWidget = (() => {
               : ''}
           </div>`;
 
-        return `
+        let bannerHtml = `
           <a href="${esc(url)}" class="banner ${modifier}" target="_blank" rel="noopener">
             ${imgHtml}
             ${captionHtml}
           </a>
         `;
+
+        if (index === 0) {
+          bannerHtml += `\n          <iframe src="https://gente-de-medios.vercel.app/widget?id=rallyradio" width="280" height="480" frameborder="0" scrolling="no" style="border:none; overflow:hidden; border-radius:8px; margin: 0 auto; display: block;"></iframe>`;
+        }
+
+        return bannerHtml;
       }).join('');
 
       container.innerHTML = `<div class="banners">${html}</div>`;
