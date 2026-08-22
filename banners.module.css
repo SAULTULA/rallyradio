@@ -1,0 +1,109 @@
+/* banners.module.css - Banners Premium BEM */
+
+.banners {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.banners__loader {
+  color: var(--color-muted, #888);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+  min-height: 120px;
+}
+
+.banner:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Imagen de fondo si el banner tiene imagen */
+.banner__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.banner:hover .banner__img {
+  opacity: 1;
+}
+
+/* Contenido sobre la imagen o color */
+.banner__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.6); /* Para que el texto sea legible sobre imágenes */
+  padding: 10px 16px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+
+/* ========================================================
+   MODIFICADORES
+   ======================================================== */
+
+/* Banner Destacado (Amarillo/Rojo) */
+.banner--destacado {
+  background: linear-gradient(135deg, #e30613 0%, #990000 100%);
+  border: 2px solid #fbbf24; /* Borde amarillo */
+}
+
+.banner--destacado .banner__content {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.banner--destacado .banner__title {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.banner--destacado .banner__subtitle {
+  color: #fbbf24;
+  font-size: 0.9rem;
+}
+
+/* Banner Normal (Gris Oscuro con borde rojo punteado) */
+.banner--normal {
+  background-color: var(--color-surface, #141418);
+  border: 1px dashed #e30613; /* Borde rojo punteado como en el diseño */
+}
+
+.banner--normal .banner__title {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.banner--normal .banner__subtitle {
+  color: #a1a1aa;
+  font-size: 0.8rem;
+}

@@ -1,0 +1,97 @@
+/* clima.module.css - Widget del clima Premium BEM (Ajustado al 50% de alto) */
+
+.weather {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Reducido de 20px */
+  justify-content: center;
+  padding: 5px 0; /* Reducido de 20px */
+}
+
+.weather__loader {
+  color: var(--color-muted, #888);
+  font-size: 0.75rem; /* Ajustado */
+  text-align: center;
+  width: 100%;
+}
+
+.weather-strip {
+  background: linear-gradient(90deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  padding: 0.15rem 8px; /* Reducido al 50% */
+  border-bottom: 2px solid #333;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  line-height: 1; /* Agregado para eliminar espacio vertical invisible */
+}
+
+.weather-mini {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #222 0%, #2a2a2a 100%);
+  padding: 1px 4px; /* Padding ultra ultracompacto */
+  border-radius: 4px; 
+  border: 1px solid #444;
+  min-width: 110px; /* Reducido de 150px para ajustar la proporción */
+  height: 24px; /* Alto fijo forzado para reducir a la mitad */
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+.weather-mini:hover {
+  border-color: var(--rally-yellow);
+  transform: translateY(-1px);
+}
+
+.weather-mini img {
+  width: 14px; /* Icono reducido */
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.weather-mini-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1; /* Obliga al texto a compactarse */
+  justify-content: center;
+}
+
+.weather-mini-city {
+  font-size: 0.45rem;
+  color: white;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+
+.weather-mini-temp {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: var(--rally-yellow);
+  font-family: 'Racing Sans One', cursive;
+  margin: 0;
+  padding: 0;
+}
+
+.weather-card__desc {
+  color: #a1a1aa;
+  font-size: 0.55rem;
+  text-transform: lowercase;
+}
+
+.weather-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 4px;
+  row-gap: 2px;
+  font-size: 0.55rem;
+  color: #a1a1aa;
+}
+
+.weather-card__stat {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}

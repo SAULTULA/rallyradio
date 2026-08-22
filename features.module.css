@@ -1,0 +1,523 @@
+/* features.module.css */
+
+/* Social Links Header */
+.social-header {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.social-header__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.social-header__link:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-header__link--facebook:hover {
+  background: #1877f2;
+  border-color: #1877f2;
+}
+
+.social-header__link--instagram:hover {
+  background: #e1306c;
+  border-color: #e1306c;
+}
+
+/* News Section */
+.news {
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.news__header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.news__title {
+  font-family: 'Racing Sans One', cursive; /* Using existing font or fallback */
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.news__line {
+  width: 100px;
+  height: 4px;
+  background: var(--rally-red, #e30613);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.news__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+.news-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #333;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--rally-red, #e30613);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.news-card__img-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  overflow: hidden;
+}
+
+.news-card__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.news-card:hover .news-card__image {
+  transform: scale(1.05);
+}
+
+.news-card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(227, 6, 19, 0.8);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.news-card:hover .news-card__overlay {
+  opacity: 1;
+}
+
+.news-card__content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.news-card__source {
+  font-size: 0.7rem;
+  color: var(--rally-yellow, #ffd700);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.news-card__title {
+  font-size: 1rem;
+  color: #fff;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* News Reader Modal */
+.card-news-reader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.card-news-reader__header {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+}
+
+.card-news-reader__close {
+  background: var(--rally-red, #e30613);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.3s;
+}
+
+.card-news-reader__close:hover {
+  background: #ff3333;
+}
+
+.card-news-reader__body {
+  flex-grow: 1;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-news-reader__iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Facebook Embed Container */
+.fb-embed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+/* News Section (page-level wrapper) */
+.news {
+  background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+  padding: 60px 20px;
+  max-width: 100%;
+  margin: 0;
+}
+
+.news > .news__header,
+.news > .news__grid {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* News Item (list style – used in qwen3 & panella.html) */
+.news-item {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  transition: background 0.2s;
+}
+
+.news-item:last-child {
+  border-bottom: none;
+}
+
+.news-item:hover {
+  background: rgba(227, 6, 19, 0.05);
+  border-radius: 8px;
+  padding-left: 8px;
+}
+
+.news-item .time {
+  font-size: 0.75rem;
+  color: var(--rally-yellow, #ffd700);
+  font-weight: 700;
+  min-width: 45px;
+  margin-top: 3px;
+  font-family: 'Space Mono', monospace, sans-serif;
+}
+
+.news-item p {
+  font-size: 0.9rem;
+  color: #ddd;
+  line-height: 1.45;
+  margin: 0 0 4px;
+}
+
+.news-item .src {
+  font-size: 0.72rem;
+  color: var(--rally-red, #e30613);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Radio Power section padding override */
+.news-page-wrapper {
+  padding: 40px 20px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   VIDEO FEED — Cards dinámicas del scraper
+   ============================================================ */
+
+.video-feed {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  padding: 16px 0;
+}
+
+.video-feed--single {
+  grid-template-columns: 1fr;
+}
+
+.video-feed--loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #888;
+  font-size: 0.9rem;
+  gap: 10px;
+}
+
+/* Spinner */
+.video-feed__spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--rally-red, #e30613);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Card */
+.video-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  border-color: var(--rally-red, #e30613);
+}
+
+/* Thumbnail */
+.video-card__thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111;
+}
+
+.video-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.video-card:hover .video-card__thumb img {
+  transform: scale(1.04);
+}
+
+/* Play overlay */
+.video-card__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  transition: background 0.2s;
+}
+
+.video-card:hover .video-card__play {
+  background: rgba(227, 6, 19, 0.55);
+}
+
+.video-card__play-icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+}
+
+.video-card:hover .video-card__play-icon {
+  transform: scale(1.12);
+}
+
+.video-card__play-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: #e30613;
+  margin-left: 3px;
+}
+
+/* No thumbnail fallback */
+.video-card__thumb--no-img {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+/* Card info */
+.video-card__info {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+}
+
+.video-card__source {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--rally-red, #e30613);
+}
+
+.video-card__title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #eee;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+.video-card__date {
+  font-size: 0.72rem;
+  color: #666;
+  margin-top: auto;
+}
+
+/* Modal de video */
+.video-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.video-modal {
+  background: #111;
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 720px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  position: relative;
+}
+
+.video-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+.video-modal__close:hover {
+  background: #e30613;
+}
+
+.video-modal iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  display: block;
+}
+
+.video-modal__title {
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  color: #ccc;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .video-feed {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Hybrid News & Social Grid */
+.news-and-social-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; align-items: start; }
+@media (max-width: 900px) { .news-and-social-grid { grid-template-columns: 1fr; } }
+
+/* Facebook Container (2 columns) */
+.facebook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; margin-top: 20px; }
+@media (max-width: 900px) { .facebook-grid { grid-template-columns: 1fr; } }

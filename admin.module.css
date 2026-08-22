@@ -1,0 +1,218 @@
+/* admin.module.css - Estilos premium para el Panel de Administrador BEM */
+
+:root {
+  --admin-bg: #0a0a0c;
+  --admin-surface: #141418;
+  --admin-surface-hover: #1f1f25;
+  --admin-primary: #e30613;
+  --admin-primary-hover: #ff1a27;
+  --admin-text: #ffffff;
+  --admin-text-muted: #a1a1aa;
+  --admin-border: #27272a;
+  --admin-border-focus: #4b4b53;
+  --admin-radius: 12px;
+  --admin-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--admin-bg);
+  color: var(--admin-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ========================================================
+   MODAL DE LOGIN
+   ======================================================== */
+.admin-login {
+  background: var(--admin-surface);
+  padding: 40px;
+  border-radius: var(--admin-radius);
+  border: 1px solid var(--admin-border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  opacity: 1;
+  transition: opacity var(--admin-transition), transform var(--admin-transition);
+}
+
+.admin-login--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+  position: absolute;
+}
+
+.admin-login__header {
+  text-align: center;
+}
+
+.admin-login__title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.admin-login__subtitle {
+  margin: 8px 0 0;
+  color: var(--admin-text-muted);
+  font-size: 0.875rem;
+}
+
+.admin-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-login__group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-login__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--admin-text-muted);
+  letter-spacing: 0.05em;
+}
+
+.admin-login__input {
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color var(--admin-transition), box-shadow var(--admin-transition);
+  outline: none;
+}
+
+.admin-login__input:focus {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.15);
+}
+
+.admin-login__btn {
+  background: var(--admin-primary);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color var(--admin-transition), transform var(--admin-transition);
+  margin-top: 8px;
+}
+
+.admin-login__btn:hover {
+  background: var(--admin-primary-hover);
+  transform: translateY(-2px);
+}
+
+.admin-login__btn:active {
+  transform: translateY(0);
+}
+
+.admin-login__error {
+  color: #ef4444;
+  font-size: 0.85rem;
+  text-align: center;
+  min-height: 20px;
+}
+
+/* ========================================================
+   DASHBOARD
+   ======================================================== */
+.admin-dashboard {
+  width: 100%;
+  max-width: 1000px;
+  padding: 40px 20px;
+  display: none; /* Oculto por defecto, JS cambia a grid/block */
+  flex-direction: column;
+  gap: 32px;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.admin-dashboard--visible {
+  display: flex;
+}
+
+.admin-dashboard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--admin-border);
+  padding-bottom: 24px;
+}
+
+.admin-dashboard__title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.admin-dashboard__logout {
+  background: transparent;
+  color: var(--admin-text-muted);
+  border: 1px solid var(--admin-border);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--admin-transition);
+}
+
+.admin-dashboard__logout:hover {
+  color: var(--admin-text);
+  border-color: var(--admin-text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Cards del Dashboard */
+.admin-card {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 24px;
+}
+
+.admin-card__title {
+  margin: 0 0 20px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Estado de cargando global o en secciones */
+.admin-loader {
+  border: 2px solid var(--admin-border);
+  border-top-color: var(--admin-primary);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
