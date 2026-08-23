@@ -1,1837 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rally Radio - Panella Producciones | Villa Dolores, Córdoba</title>
-
-  <!-- Icono genérico para evitar el error 404 del favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-  <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Roboto:wght@400;700&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="reels.module.css">
-  <link rel="stylesheet" href="features.module.css">
-  <link rel="stylesheet" href="clima.module.css">
-  <link rel="stylesheet" href="banners.module.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --rally-red: #e30613;
-      --rally-dark: #0a0a0a;
-      --rally-yellow: #ffd700;
-      --rally-gray: #1a1a1a;
-      --rally-light: #f5f5f5;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: var(--rally-dark);
-      color: var(--rally-light);
-      overflow-x: hidden;
-    }
-
-    /* HEADER */
-    header {
-      background: linear-gradient(90deg, #000 0%, var(--rally-red) 50%, #000 100%);
-      padding: 15px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(227, 6, 19, 0.5);
-    }
-
-    .header-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-    }
-
-    .logo-header {
-      font-family: 'Racing Sans One', cursive;
-      font-size: 1.8rem;
-      color: white;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-      letter-spacing: 2px;
-    }
-
-    .logo-header span {
-      color: var(--rally-yellow);
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 30px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      transition: color 0.3s;
-      position: relative;
-    }
-
-    nav a:hover {
-      color: var(--rally-yellow);
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--rally-yellow);
-      transition: width 0.3s;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    /* HERO */
-    .hero {
-      position: relative;
-      min-height: 700px;
-      background:
-        radial-gradient(ellipse at center, rgba(227, 6, 19, 0.15) 0%, transparent 70%),
-        linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 20px;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.02) 35px, rgba(255, 255, 255, 0.02) 70px);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 10;
-      display: grid;
-      grid-template-columns: 1fr 1.2fr 1fr;
-      gap: 20px;
-      max-width: 1400px;
-      width: 100%;
-      align-items: center;
-    }
-
-    .cars-left,
-    .cars-right {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-
-    .car-img {
-      width: 100%;
-      max-width: 380px;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-      transition: transform 0.5s, box-shadow 0.5s;
-      border: 3px solid var(--rally-red);
-    }
-
-    .car-img:hover {
-      transform: scale(1.05) rotate(-2deg);
-      box-shadow: 0 15px 50px rgba(227, 6, 19, 0.6);
-    }
-
-    .cars-left .car-img:nth-child(1) {
-      transform: rotate(3deg);
-    }
-
-    .cars-left .car-img:nth-child(2) {
-      transform: rotate(-2deg);
-    }
-
-    .cars-right .car-img:nth-child(1) {
-      transform: rotate(-3deg);
-    }
-
-    .cars-right .car-img:nth-child(2) {
-      transform: rotate(2deg);
-    }
-
-    .logo-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .logo-main {
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 60px rgba(227, 6, 19, 0.6), 0 0 100px rgba(255, 215, 0, 0.3);
-      animation: pulse 3s ease-in-out infinite;
-      border: 5px solid var(--rally-red);
-      background: white;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        transform: scale(1);
-        box-shadow: 0 0 60px rgba(227, 6, 19, 0.6);
-      }
-
-      50% {
-        transform: scale(1.03);
-        box-shadow: 0 0 80px rgba(227, 6, 19, 0.9);
-      }
-    }
-
-    .hero-title {
-      font-family: 'Racing Sans One', cursive;
-      font-size: 3rem;
-      margin-top: 20px;
-      color: white;
-      text-shadow: 3px 3px 0 var(--rally-red);
-      letter-spacing: 3px;
-    }
-
-    .hero-subtitle {
-      font-size: 1.1rem;
-      color: var(--rally-yellow);
-      margin-top: 10px;
-      font-weight: 600;
-    }
-
-    .hero-location {
-      font-size: 0.95rem;
-      color: #ccc;
-      margin-top: 5px;
-    }
-
-    /* PLAYER */
-    .radio-player {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: linear-gradient(135deg, var(--rally-red) 0%, #8b0000 100%);
-      border-radius: 60px;
-      padding: 12px 25px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      box-shadow: 0 10px 40px rgba(227, 6, 19, 0.6);
-      z-index: 1000;
-      border: 2px solid var(--rally-yellow);
-      transition: transform 0.3s;
-    }
-
-    .radio-player:hover {
-      transform: translateY(-3px);
-    }
-
-    .play-btn {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: white;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      color: var(--rally-red);
-      transition: transform 0.3s;
-      flex-shrink: 0;
-    }
-
-    .play-btn:hover {
-      transform: scale(1.1);
-    }
-
-    .play-btn.playing {
-      animation: spin 3s linear infinite;
-    }
-
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    .player-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .player-title {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: white;
-    }
-
-    .player-status {
-      font-size: 0.75rem;
-      color: var(--rally-yellow);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--rally-yellow);
-      border-radius: 50%;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      50% {
-        opacity: 0.3;
-      }
-    }
-
-    .volume-control {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-left: 10px;
-    }
-
-    .volume-control input {
-      width: 70px;
-      accent-color: var(--rally-yellow);
-    }
-
-    /* ============ BARRA DE CLIMA ============ */
-    .weather-strip {
-      background: linear-gradient(90deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
-      padding: 3px 10px !important;
-      border-bottom: 2px solid #333;
-      position: relative;
-    }
-
-    .weather-strip-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .weather-strip-label {
-      font-family: 'Racing Sans One', cursive;
-      color: var(--rally-yellow);
-      font-size: 0.75rem !important;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-
-    .weather-strip-label::after {
-      content: '';
-      display: inline-block;
-      width: 2px;
-      height: 14px !important;
-      background: var(--rally-red);
-      margin-left: 5px;
-    }
-
-    .weather-strip-scroll {
-      flex: 1;
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 2px 0 !important;
-      scroll-behavior: smooth;
-    }
-
-    .weather-strip-scroll::-webkit-scrollbar {
-      height: 3px;
-    }
-
-    .weather-strip-scroll::-webkit-scrollbar-track {
-      background: #0a0a0a;
-    }
-
-    .weather-strip-scroll::-webkit-scrollbar-thumb {
-      background: var(--rally-red);
-      border-radius: 2px;
-    }
-
-    /* Regla que ajusta directamente la tarjeta de Villa Dolores */
-    .weather-mini {
-      display: flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-      background: linear-gradient(135deg, #222 0%, #2a2a2a 100%) !important;
-      padding: 2px 8px !important;
-      border-radius: 4px !important;
-      border: 1px solid #444 !important;
-      height: 26px !important;
-      min-width: auto !important;
-      flex-shrink: 0;
-      box-sizing: border-box !important;
-    }
-
-    .weather-mini img {
-      width: 16px !important;
-      height: 16px !important;
-    }
-
-    .weather-mini-info {
-      display: flex;
-      flex-direction: column;
-      line-height: 1 !important;
-    }
-
-    .weather-mini-city {
-      font-size: 0.5rem !important;
-      color: #fff;
-    }
-
-    .weather-mini-temp {
-      font-size: 0.6rem !important;
-      color: var(--rally-yellow);
-    }
-
-    /* Duplicate weather-mini styles removed – external clima.module.css handles styling */
-
-
-    .weather-mini .delete-weather {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background: var(--rally-red);
-      border: none;
-      color: white;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 0.7rem;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .admin-mode .weather-mini .delete-weather {
-      display: flex;
-    }
-
-    .weather-strip-empty {
-      color: #666;
-      font-size: 0.85rem;
-      font-style: italic;
-    }
-
-    .weather-admin-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #666;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .weather-admin-btn:hover {
-      background: var(--rally-red);
-      color: white;
-      transform: rotate(90deg);
-    }
-
-    /* CHECKERED DIVIDER */
-    .checkered-divider {
-      height: 20px;
-      background: repeating-linear-gradient(90deg, #000 0px, #000 20px, var(--rally-red) 20px, var(--rally-red) 40px);
-      background-size: 40px 20px;
-    }
-
-    /* ============ VIDEOS + PUBLICIDADES ============ */
-    .videos-ads-layout {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      display: grid;
-      grid-template-columns: 1fr 350px;
-      gap: 30px;
-      align-items: start;
-    }
-
-    .videos-section {
-      background: linear-gradient(135deg, #151515 0%, #1a1a1a 100%);
-      border-radius: 15px;
-      padding: 25px;
-      border: 1px solid #333;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .section-title {
-      font-family: 'Racing Sans One', cursive;
-      font-size: 1.8rem;
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-title::before {
-      content: '';
-      display: inline-block;
-      width: 5px;
-      height: 28px;
-      background: var(--rally-red);
-      border-radius: 2px;
-    }
-
-    .videos-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-
-    .video-card {
-      background: #1a1a1a;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 2px solid #333;
-      transition: all 0.3s;
-      position: relative;
-      aspect-ratio: 9/16;
-    }
-
-    .video-card:hover {
-      border-color: var(--rally-red);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(227, 6, 19, 0.3);
-    }
-
-    .video-card iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .video-card .delete-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(227, 6, 19, 0.9);
-      border: none;
-      color: white;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 0.9rem;
-      z-index: 5;
-      display: none;
-    }
-
-    .admin-mode .video-card .delete-btn {
-      display: block;
-    }
-
-    .videos-empty {
-      text-align: center;
-      color: #666;
-      padding: 40px 20px;
-      grid-column: 1/-1;
-      font-size: 0.95rem;
-    }
-
-    /* PUBLICIDADES COLUMNA */
-    .ads-sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      position: sticky;
-      top: 90px;
-    }
-
-    .ads-sidebar-title {
-      font-family: 'Racing Sans One', cursive;
-      font-size: 1.3rem;
-      color: var(--rally-yellow);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 10px;
-      border-bottom: 2px solid var(--rally-red);
-    }
-
-    .ad-banner {
-      background: linear-gradient(135deg, #222 0%, #333 100%);
-      border: 2px dashed var(--rally-red);
-      border-radius: 12px;
-      height: 180px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #888;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-      padding: 15px;
-    }
-
-    .ad-banner.has-content {
-      border-style: solid;
-      border-color: var(--rally-yellow);
-      background-size: cover;
-      background-position: center;
-    }
-
-    .ad-banner.has-content .ad-placeholder {
-      display: none;
-    }
-
-    .ad-banner:hover {
-      border-color: var(--rally-yellow);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
-    }
-
-    .ad-banner .ad-icon {
-      font-size: 2.2rem;
-      margin-bottom: 8px;
-      color: var(--rally-red);
-    }
-
-    .ad-banner h3 {
-      font-size: 0.95rem;
-      margin-bottom: 5px;
-    }
-
-    .ad-banner p {
-      font-size: 0.8rem;
-    }
-
-    .ad-banner.featured {
-      height: 220px;
-      background: linear-gradient(135deg, var(--rally-red) 0%, #5a0000 100%);
-      border: 2px solid var(--rally-yellow);
-      color: white;
-    }
-
-    .ad-banner.featured .ad-icon {
-      color: var(--rally-yellow);
-    }
-
-    .ad-banner .delete-ad {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(227, 6, 19, 0.9);
-      border: none;
-      color: white;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 0.9rem;
-      display: none;
-      z-index: 5;
-    }
-
-    .admin-mode .ad-banner .delete-ad {
-      display: block;
-    }
-
-    /* ADMIN BUTTON */
-    .admin-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #666;
-      cursor: pointer;
-      font-size: 0.95rem;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .admin-btn:hover {
-      background: var(--rally-red);
-      color: white;
-      border-color: var(--rally-red);
-      transform: rotate(90deg);
-    }
-
-    /* MODAL */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      backdrop-filter: blur(5px);
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal {
-      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-      border: 2px solid var(--rally-red);
-      border-radius: 15px;
-      padding: 30px;
-      max-width: 500px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-    }
-
-    .modal h2 {
-      font-family: 'Racing Sans One', cursive;
-      color: var(--rally-yellow);
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: var(--rally-red);
-      border: none;
-      color: white;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--rally-yellow);
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 12px;
-      background: #0a0a0a;
-      border: 1px solid #444;
-      border-radius: 8px;
-      color: white;
-      font-size: 1rem;
-      transition: border-color 0.3s;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus {
-      outline: none;
-      border-color: var(--rally-red);
-    }
-
-    .btn {
-      background: linear-gradient(135deg, var(--rally-red) 0%, #8b0000 100%);
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s;
-      font-size: 0.95rem;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(227, 6, 19, 0.5);
-    }
-
-    .btn-block {
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    /* FIXED ADMIN BUTTON */
-    .fixed-admin-btn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #555;
-      cursor: pointer;
-      font-size: 1.2rem;
-      z-index: 999;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .fixed-admin-btn:hover {
-      background: var(--rally-red);
-      color: white;
-      transform: rotate(90deg);
-    }
-
-    /* ADMIN PANEL */
-    .admin-panel {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-      border: 2px solid var(--rally-yellow);
-      border-radius: 15px;
-      padding: 30px;
-      z-index: 2001;
-      display: none;
-      min-width: 300px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-    }
-
-    .admin-panel.active {
-      display: block;
-    }
-
-    .admin-panel h3 {
-      font-family: 'Racing Sans One', cursive;
-      color: var(--rally-yellow);
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .admin-option {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, var(--rally-red) 0%, #8b0000 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.3s;
-      text-align: left;
-    }
-
-    .admin-option:hover {
-      transform: translateX(5px);
-      box-shadow: 0 5px 20px rgba(227, 6, 19, 0.5);
-    }
-
-    .admin-option span {
-      margin-right: 10px;
-    }
-
-    /* FOOTER */
-    footer {
-      background: linear-gradient(180deg, #0a0a0a 0%, #000 100%);
-      padding: 60px 20px 30px;
-      border-top: 3px solid var(--rally-red);
-    }
-
-    .footer-content {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .footer-col h3 {
-      font-family: 'Racing Sans One', cursive;
-      color: var(--rally-yellow);
-      margin-bottom: 20px;
-      font-size: 1.3rem;
-    }
-
-    .footer-col p,
-    .footer-col a {
-      color: #aaa;
-      line-height: 1.8;
-      text-decoration: none;
-      display: block;
-    }
-
-    .footer-col a:hover {
-      color: var(--rally-red);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 15px;
-      margin-top: 15px;
-    }
-
-    .social-links a {
-      width: 40px;
-      height: 40px;
-      background: var(--rally-red);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1.2rem;
-      transition: all 0.3s;
-    }
-
-    .social-links a:hover {
-      background: var(--rally-yellow);
-      color: black;
-      transform: translateY(-3px);
-    }
-
-    .footer-bottom {
-      text-align: center;
-      padding-top: 30px;
-      border-top: 1px solid #333;
-      color: #666;
-      font-size: 0.9rem;
-    }
-
-    .footer-bottom strong {
-      color: var(--rally-red);
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 968px) {
-      .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .cars-left,
-      .cars-right {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .car-img {
-        max-width: 250px;
-        height: 150px;
-      }
-
-      .logo-main {
-        width: 250px;
-        height: 250px;
-      }
-
-      .hero-title {
-        font-size: 2rem;
-      }
-
-      .videos-ads-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .videos-grid {
-        grid-template-columns: 1fr;
-        max-width: 360px;
-        margin: 0 auto;
-      }
-
-      .ads-sidebar {
-        position: static;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .ads-sidebar-title {
-        grid-column: 1/-1;
-      }
-
-      .weather-strip-inner {
-        flex-wrap: wrap;
-      }
-
-      .weather-strip-label {
-        width: 100%;
-      }
-
-      .footer-content {
-        grid-template-columns: 1fr;
-      }
-
-      nav ul {
-        display: none;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      nav ul.active {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 70px;
-        right: 20px;
-        background: var(--rally-dark);
-        padding: 20px;
-        border-radius: 10px;
-        border: 2px solid var(--rally-red);
-      }
-
-      .radio-player {
-        bottom: 10px;
-        right: 10px;
-        left: 10px;
-        border-radius: 30px;
-        padding: 10px 15px;
-      }
-
-      .volume-control {
-        display: none;
-      }
-    }
-
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #0a0a0a;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--rally-red);
-      border-radius: 5px;
-    }
-
-    .msg {
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      font-size: 0.9rem;
-    }
-
-    .msg-error {
-      background: rgba(227, 6, 19, 0.2);
-      color: #ff6b6b;
-      border: 1px solid var(--rally-red);
-    }
-
-    .msg-success {
-      background: rgba(0, 200, 100, 0.2);
-      color: #6bff6b;
-      border: 1px solid #00c864;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Portal de Noticias & Radio En Vivo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        /* Estilos para la barra de clima en vivo */
+        .weather-ticker-container {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-bottom: 2px solid #d9534f;
+            padding: 10px 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .weather-ticker-title {
+            color: #d9534f;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .weather-ticker-scroll {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: #d9534f transparent;
+        }
+        .weather-ticker-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .weather-ticker-scroll::-webkit-scrollbar-thumb {
+            background: #d9534f;
+            border-radius: 4px;
+        }
+        .weather-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .weather-item span {
+            font-weight: bold;
+            color: #f0f0f0;
+        }
+
+        .contador-widget {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .contador-widget iframe {
+            width: 100%;
+            max-width: 300px;
+            display: block;
+        }
+    </style>
 </head>
-
 <body>
 
-  <header>
-    <div class="header-inner">
-      <div class="logo-header">RALLY <span>RADIO</span> 🏁</div>
-      <nav>
-        <ul id="navMenu">
-          <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#videos">Facebook</a></li>
-          <li><a href="#noticias">Noticias</a></li>
-          <li><a href="#publicidad">Publicidad</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
-      </nav>
-      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-    </div>
-  </header>
+    <header class="main-header">
+        <div class="header-content">
+            <!-- Izquierda: Logo achicado y Título -->
+            <div class="header-left">
+                <img src="logo.png" alt="Logo Hits 20" class="header-logo" onerror="this.style.display='none'">
+                <h1>Portal de Noticias</h1>
+            </div>
 
-  <section class="hero" id="inicio">
-    <div class="hero-content">
-      <div class="cars-left">
-        <img src="assets/wrc1.jpg" alt="WRC Rally Car 1" class="car-img">
-        <img src="assets/wrc2.jpg" alt="WRC Rally Car 2" class="car-img">
-      </div>
+            <!-- Derecha: Redes Sociales -->
+            <div class="header-socials">
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/hits20radio/" target="_blank" class="header-social-btn">
+                    <div class="social-icon-box fb-water">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C18.34 21.21 22 17.06 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
+                    </div>
+                    <span>Facebook</span>
+                </a>
 
-      <div class="logo-container">
-        <img src="assets/logo.jpg" alt="Rally Radio Logo" class="logo-main">
-        <h1 class="hero-title">RALLY RADIO</h1>
-        <p class="hero-subtitle">🏁 La voz del rally argentino 🏁</p>
-        <p class="hero-location">📍 Panella Producciones · Villa Dolores, Córdoba</p>
-        <div class="social-header">
-          <a href="https://www.facebook.com/share/1DcYAJzbL2/" target="_blank"
-            class="social-header__link social-header__link--facebook" title="Beto Panella">
-            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z" />
-            </svg>
-          </a>
-          <a href="https://www.facebook.com/share/1GuALDJ1KU/" target="_blank"
-            class="social-header__link social-header__link--facebook" title="Radio Rally">
-            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z" />
-            </svg>
-          </a>
-          <a href="https://www.instagram.com/panella.alberto?igsh=czR4NmNxZTQ2bWo1" target="_blank"
-            class="social-header__link social-header__link--instagram" title="Instagram">
-            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-            </svg>
-          </a>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/hits20online/" target="_blank" class="header-social-btn">
+                    <div class="social-icon-box ig-water">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </div>
+                    <span>Instagram</span>
+                </a>
+
+                <!-- Threads -->
+                <a href="https://www.threads.net/@hits20online" target="_blank" class="header-social-btn">
+                    <div class="social-icon-box threads-water">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.186 20.082c-1.637 0-3.053-.34-4.248-1.02-1.196-.68-2.115-1.66-2.756-2.94-.641-1.28-.962-2.775-.962-4.485 0-1.71.321-3.205.962-4.485.641-1.28 1.56-2.26 2.756-2.94 1.195-.68 2.611-1.02 4.248-1.02 1.815 0 3.336.41 4.563 1.23 1.226.82 2.023 1.95 2.39 3.39l-2.074.56c-.276-.99-.868-1.75-1.776-2.28-.908-.53-1.996-.795-3.263-.795-1.267 0-2.355.265-3.263.795-.908.53-1.59 1.29-2.046 2.28-.456.99-.684 2.12-.684 3.39 0 1.27.228 2.4.684 3.39.456.99 1.138 1.75 2.046 2.28.908.53 1.996.795 3.263.795.894 0 1.706-.135 2.436-.405.73-.27 1.348-.66 1.854-1.17.506-.51.89-1.12 1.152-1.83l1.968.72c-.41 1.17-1.104 2.13-2.082 2.88-.978.75-2.17 1.125-3.576 1.125zm2.88-15.082c-.895 0-1.63.15-2.205.45-.575.3-1.01.73-1.305 1.29-.295.56-.443 1.21-.443 1.95 0 .74.148 1.39.443 1.95.295.56.73.99 1.305 1.29.575.3 1.31.45 2.205.45.895 0 1.63-.15 2.205-.45.575-.3 1.01-.73 1.305-1.29.295-.56.443-1.21.443 1.95 0-.74-.148-1.39-.443-1.95-.295-.56-.73-.99-1.305-1.29-.575-.3-1.31-.45-2.205-.45z"/></svg>
+                    </div>
+                    <span>Threads</span>
+                </a>
+
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@hits20radio" target="_blank" class="header-social-btn">
+                    <div class="social-icon-box yt-water">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </div>
+                    <span>YouTube</span>
+                </a>
+
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@hits20online?_r=1&_t=ZS-980S8qdbZa9" target="_blank" class="header-social-btn">
+                    <div class="social-icon-box tiktok-water">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg>
+                    </div>
+                    <span>TikTok</span>
+                </a>
+            </div>
         </div>
-      </div>
+    </header>
 
-      <div class="cars-right">
-        <img src="assets/wrc3.jpg" alt="WRC Rally Car 3" class="car-img">
-        <img src="assets/wrc4.jpg" alt="WRC Rally Car 4" class="car-img">
-      </div>
-    </div>
-  </section>
+    <div class="main-container">
+        <!-- ÁREA CENTRAL DE NOTICIAS -->
+        <main id="noticias-container">
+            
+            <!-- WIDGET DE CLIMA EN VIVO -->
+            <div class="weather-ticker-container">
+                <div class="weather-ticker-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>🌡️ Estado del Clima en la Provincia de San Luis</span>
+                    <button onclick="abrirModalOtrasLoc()" class="btn-otras-loc">Otras Loc</button>
+                </div>
+                <div class="weather-ticker-scroll" id="weather-ticker">
+                    <div class="weather-item">Cargando clima...</div>
+                </div>
+            </div>
 
-  <!-- ============ BARRA DE CLIMA ============ -->
-  <div id="clima-container"></div>
+            <!-- SECCIÓN FACEBOOK -->
+            <section class="categoria-section">
+                <h2>Noticias Facebook Hits20RadioOnline</h2>
+                <div class="grid" id="grid-facebook">
+                    <p style="color: #666; font-size: 0.9rem;">Cargando publicaciones de Facebook...</p>
+                </div>
+            </section>
 
-  <div class="checkered-divider"></div>
+            <!-- 1. NOTICIAS PROVINCIALES -->
+            <section class="categoria-section">
+                <h2>Noticias Provinciales</h2>
+                <div class="grid" id="grid-provinciales"></div>
+            </section>
 
-  <!-- PLAYER -->
-  <div class="radio-player">
-    <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
-    <div class="player-info">
-      <div class="player-title">📻 Rally Radio EN VIVO</div>
-      <div class="player-status">
-        <span class="live-dot"></span>
-        <span id="playerStatus">OFF AIR</span>
-      </div>
-    </div>
-    <div class="volume-control">
-      <span>🔊</span>
-      <input type="range" id="volumeSlider" min="0" max="100" value="70" oninput="changeVolume(this.value)">
-    </div>
-    <audio id="radioStream" preload="none">
-      <source src="https://server4.hostradios.com:7229/stream" type="audio/mpeg">
-    </audio>
-  </div>
+            <!-- 2. NOTICIAS NACIONALES -->
+            <section class="categoria-section">
+                <h2>Noticias Nacionales</h2>
+                <div class="grid" id="grid-nacionales"></div>
+            </section>
 
-  <!-- BOTÓN ADMIN FIJO -->
-  <button class="fixed-admin-btn" onclick="openAdminPanel()" title="Panel Admin">⚙</button>
+            <!-- 3. NOTICIAS INTERNACIONALES -->
+            <section class="categoria-section">
+                <h2>Noticias Internacionales</h2>
+                <div class="grid" id="grid-internacionales"></div>
+            </section>
 
-  <!-- PANEL ADMIN -->
-  <div class="admin-panel" id="adminPanel">
-    <button class="modal-close" onclick="closeAdminPanel()">✕</button>
-    <h3>🔧 PANEL ADMINISTRADOR</h3>
-    <button class="admin-option" onclick="openWeatherModal()"><span>🌤️</span> Agregar Localidad (Clima)</button>
-    <button class="admin-option" onclick="openVideoModal()"><span>📹</span> Cargar Video de Facebook</button>
-    <button class="admin-option" onclick="openAdModal()"><span>📢</span> Cargar Publicidad</button>
-  </div>
+            <!-- 4. NOTICIAS MINUTO 1 -->
+            <section class="categoria-section">
+                <h2>Noticias Minuto 1</h2>
+                <div class="grid" id="grid-minutouno">
+                    <p style="color: #666; font-size: 0.9rem;">Cargando últimas noticias de Minuto 1...</p>
+                </div>
+            </section>
 
-  <!-- MODAL CLIMA -->
-  <div class="modal-overlay" id="weatherModal">
-    <div class="modal">
-      <button class="modal-close" onclick="closeModal('weatherModal')">✕</button>
-      <h2>🌤️ Agregar Localidad de Córdoba</h2>
-      <div class="form-group">
-        <label>Seleccioná una localidad</label>
-        <select id="citySelect">
-          <option value="">-- Elegí una localidad --</option>
-        </select>
-      </div>
-      <div id="weatherMsg"></div>
-      <button class="btn btn-block" onclick="addCityFromList()">🌤️ Agregar Clima</button>
-      <p style="color: #666; font-size: 0.8rem; margin-top: 15px; text-align: center;">
-        💡 Se cargará el clima en tiempo real desde OpenWeatherMap
-      </p>
-    </div>
-  </div>
+        </main>
 
-  <!-- MODAL VIDEO -->
+        <!-- LATERAL DERECHO -->
+        <aside class="sidebar">
+            <div class="search-widget">
+                <input type="text" id="searchInput" placeholder="Buscar noticias..." onkeyup="filterNews()">
+            </div>
 
-  <!-- MODAL PUBLICIDAD -->
-  <div class="modal-overlay" id="adModal">
-    <div class="modal">
-      <button class="modal-close" onclick="closeModal('adModal')">✕</button>
-      <h2>📢 Cargar Publicidad</h2>
-      <div class="form-group">
-        <label>Posición</label>
-        <select id="adPosition">
-          <option value="0">Banner 1 (Destacado)</option>
-          <option value="1">Banner 2</option>
-          <option value="2">Banner 3</option>
-          <option value="3">Banner 4</option>
-          <option value="4">Banner 5</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>URL de la imagen</label>
-        <input type="url" id="adImage" placeholder="https://...">
-      </div>
-      <div class="form-group">
-        <label>Link al hacer clic (opcional)</label>
-        <input type="url" id="adLink" placeholder="https://...">
-      </div>
-      <div class="form-group">
-        <label>Texto alternativo</label>
-        <input type="text" id="adText" placeholder="Descripción de la publicidad">
-      </div>
-      <div id="adMsg"></div>
-      <button class="btn btn-block" onclick="saveAd()">💾 Guardar Publicidad</button>
-    </div>
-  </div>
+            <!-- Reproductor de Radio -->
+            <div class="radio-widget">
+                <img src="logo.png" alt="Logo Radio" class="radio-logo" onerror="this.src='https://via.placeholder.com/100?text=RADIO'">
+                <button class="btn-live" onclick="abrirPlayer()">
+                    <span class="dot"></span> Radio en Vivo
+                </button>
+            </div>
 
-  <!-- ============ VIDEOS + PUBLICIDADES ============ -->
-  <div class="videos-ads-layout">
+            <!-- Contador de Visitas -->
+            <div class="contador-widget" style="margin-top: 15px; text-align: center;">
+                <iframe src="https://contador-red-delta.vercel.app/widget.html?id=PORTAL%20DE%20NOTICIAS%20HITS20&t=1787066414602" width="300" height="246" frameborder="0" scrolling="no" style="border:none; overflow:hidden;"></iframe>
+            </div>
+        
+            <!-- Formulario de Contacto -->
+            <div class="contact-widget">
+                <h3>Contacto</h3>
+                <form action="https://formspree.io/f/mdenpzbp" method="POST">
+                    <input type="text" name="nombre" placeholder="Tu Nombre" required>
+                    <input type="email" name="email" placeholder="Tu Email" required>
+                    <textarea name="mensaje" placeholder="Tu mensaje..." required></textarea>
+                    <button type="submit">Enviar Mensaje</button>
+                </form>
+            </div>
 
-    <!-- FACEBOOK  / RALLY -->
-    <div class="videos-section" id="videos">
-      <div class="section-header">
-        <h2 class="section-title">📱 REDES SOCIALES</h2>
-      </div>
-      <!-- Un solo contenedor con la clase grid-videos-rally -->
-      <div id="fb-rally-videos" class="grid-videos-rally"></div>
+            <!-- Espacios para Pauta -->
+            <div class="ads">
+                <div class="ad-slot"><p>Espacio Publicitario / Flyer 1</p></div>
+                <div class="ad-slot"><p>Espacio Publicitario / Flyer 2</p></div>
+            </div>
+
+            <!-- Inicio de Sesión -->
+            <div style="margin-top: 25px;">
+                <a href="login.html">Inicio de sesión</a>
+            </div>
+
+            <!-- Instalar App (PWA) -->
+            <div style="margin-top: 10px;">
+                <button id="btn-instalar">⬇️ Instalar App</button>
+            </div>
+        </aside>
     </div>
 
-    <!-- PUBLICIDADES COLUMNA -->
-    <aside class="ads-sidebar" id="publicidad">
-      <div class="ads-sidebar-title">📢 PUBLICIDAD</div>
-      <div id="banners-container"></div>
-    </aside>
-
-  </div>
-
-  <!-- NOTICIAS -->
-  <section class="news" id="noticias">
-    <div class="news__header">
-      <h2 class="news__title">📰 NOTICIAS E INFO</h2>
-      <div class="news__line"></div>
-    </div>
-    <div class="news-and-social-grid" style="max-width: 1400px; margin: 0 auto; padding: 0 20px;">
-      <div class="news__grid" id="news-grid" style="padding: 0; margin: 0;">
-        <p style="color: #aaa; text-align: center; width: 100%;">Sintonizando noticias del mundo...</p>
-      </div>
-      <div>
-        <p style="font-size:0.75rem;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Radio
-          Power 104.1</p>
-        <div id="fb-power-videos"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- NEWS READER MODAL -->
-  <section class="card-news-reader" id="news-reader" style="display: none;">
-    <div class="card-news-reader__header">
-      <button class="card-news-reader__close" id="btn-back-news">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        Cerrar Noticia
-      </button>
-    </div>
-    <div class="card-news-reader__body">
-      <iframe id="news-iframe" class="card-news-reader__iframe"></iframe>
-    </div>
-  </section>
-
-  <footer id="contacto">
-    <div class="footer-content">
-      <div class="footer-col">
-        <h3>🏁 RALLY RADIO</h3>
-        <p>La radio online líder en cobertura del rally argentino. Transmitimos en vivo las mejores competencias del
-          país.</p>
-
-      </div>
-
-      <div class="footer-col">
-        <h3>📞 CONTACTO</h3>
-        <p><strong style="color: white;">Panella Producciones</strong></p>
-        <p>📍 Villa Dolores, Córdoba, Argentina</p>
-        <p>📞 +54 3544 64-0501</p>
-      </div>
-
-      <div class="footer-col">
-        <h3>🔗 ENLACES</h3>
-        <a href="#inicio">Inicio</a>
-        <a href="#videos">Videos</a>
-        <a href="#publicidad">Publicidad</a>
-        <a href="#contacto">Contacto</a>
-      </div>
-    </div>
-
-    <div class="footer-bottom"
-      style="display: flex; flex-direction: column; align-items: center; gap: 15px; padding-bottom: 20px;">
-      <div style="display: flex; gap: 15px; align-items: center;">
-        <img src="../ksm.png" alt="KSM" style="height: 100px; border-radius: 20px;" onerror="this.style.display='none'">
-        <img src="../hits.png" alt="Hits20" style="height: 100px; border-radius: 20px;"
-          onerror="this.style.display='none'">
-      </div>
-      <p>© 2026 <strong>Derechos Reservados</strong> - <a href="https://www.ksmservicios.com.ar" target="_blank"
-          style="color: var(--rally-yellow); text-decoration: none;">www.ksmservicios.com.ar</a>-<a
-          href="https://www.hits20radioonline.com" target="_blank"
-          style="color: var(--rally-red); text-decoration: none;">www.hits20radioonline.com</a>
-      </p>
-      <p style="margin-top: 20px; text-transform: uppercase; letter-spacing: 2px;">🏁 SOLUCIONES INTELIGENTES 🏁</p>
-    </div>
-  </footer>
-
-  <script>
-    // ============ CONFIG ============
-    const OWM_API_KEY = '87a66167c1f9a7046982610d0cd59b7a';
-
-    // ============ LOCALIDADES DE CÓRDOBA ============
-    const localidadesCordoba = [
-
-      { nombre: "Villa Dolores", query: "Villa Dolores,AR" },
-      { nombre: "Mina Clavero", query: "Mina Clavero,AR" },
-      { nombre: "Los Hornillos", query: "Los Hornillos,AR" },
-      { nombre: "Cura Brochero", query: "Cura Brochero,Cordoba,AR" },
-      { nombre: "Villa de las Rosas", query: "Villa de las Rosas,AR" },
-      { nombre: "Morteros", query: "Morteros,AR" },
-      { nombre: "San Pedro", query: "San Sedro,Cordoba,AR" },
-      { nombre: "Las Tapias", query: "Las Tapias,Cordoba,AR" },
-      { nombre: "Pampa del Poncho", query: "Pampa del Poncho,AR" },
-      { nombre: "Salsacate", query: "Salsacate,AR" },
-      { nombre: "San Carlos Mina", query: "San Carlos Mina,AR" },
-      { nombre: "Las Rabonas", query: "Las Rabonas,AR" },
-
-    ];
-
-    // ============ PLAYER ============
-    const audio = document.getElementById('radioStream');
-    const playBtn = document.getElementById('playBtn');
-    const playerStatus = document.getElementById('playerStatus');
-    let isPlaying = false;
-
-    function togglePlay() {
-      if (isPlaying) {
-        audio.pause();
-        playBtn.innerHTML = '▶';
-        playBtn.classList.remove('playing');
-        playerStatus.textContent = 'OFF AIR';
-        isPlaying = false;
-      } else {
-        audio.play().then(() => {
-          playBtn.innerHTML = '⏸';
-          playBtn.classList.add('playing');
-          playerStatus.textContent = 'EN VIVO';
-          isPlaying = true;
-        }).catch(err => {
-          playerStatus.textContent = 'ERROR DE CONEXIÓN';
-          console.error(err);
-        });
-      }
-    }
-
-    function changeVolume(val) { audio.volume = val / 50; }
-    audio.volume = 0.7;
-
-    // ============ MENU ============
-    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-
-    // ============ ADMIN PANEL ============
-    function openAdminPanel() {
-      window.location.href = 'admin.html';
-    }
-
-    function closeAdminPanel() {
-      document.getElementById('adminPanel').classList.remove('active');
-      document.body.classList.remove('admin-mode');
-    }
-
-    // ============ MODALES ============
-    function openModal(id) { document.getElementById(id).classList.add('active'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-    function openWeatherModal() {
-      closeAdminPanel();
-      document.getElementById('weatherMsg').innerHTML = '';
-      openModal('weatherModal');
-    }
-
-    function openVideoModal() {
-      closeAdminPanel();
-      document.getElementById('videoTitle').value = '';
-      document.getElementById('videoUrl').value = '';
-      document.getElementById('videoMsg').innerHTML = '';
-      updateVideoLimitMsg();
-      openModal('videoModal');
-    }
-
-    function openAdModal() {
-      closeAdminPanel();
-      document.getElementById('adImage').value = '';
-      document.getElementById('adLink').value = '';
-      document.getElementById('adText').value = '';
-      document.getElementById('adMsg').innerHTML = '';
-      openModal('adModal');
-    }
-
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-      overlay.addEventListener('click', function (e) {
-        if (e.target === this) this.classList.remove('active');
-      });
-    });
-
-    // ============ CLIMA - OPENWEATHERMAP ============
-    let weatherData = JSON.parse(localStorage.getItem('rallyWeather') || '[]');
-
-    // Poblar el select de localidades
-    function populateCitySelect() {
-      const select = document.getElementById('citySelect');
-      // Mantener el primer option vacío
-      select.innerHTML = '<option value="">-- Elegí una localidad --</option>';
-      localidadesCordoba.forEach((loc, idx) => {
-        const opt = document.createElement('option');
-        opt.value = idx;
-        opt.textContent = loc.nombre;
-        select.appendChild(opt);
-      });
-    }
-
-    function addCityFromList() {
-      const select = document.getElementById('citySelect');
-      const idx = select.value;
-
-      if (idx === '') {
-        document.getElementById('weatherMsg').innerHTML = '<div class="msg msg-error">⚠️ Seleccioná una localidad</div>';
-        return;
-      }
-
-      const loc = localidadesCordoba[idx];
-
-      // Verificar si ya existe
-      if (weatherData.some(c => c.query === loc.query)) {
-        document.getElementById('weatherMsg').innerHTML = '<div class="msg msg-error">⚠️ Esta localidad ya está agregada</div>';
-        return;
-      }
-
-      document.getElementById('weatherMsg').innerHTML = '<div class="msg" style="background: rgba(255,215,0,0.1); color: var(--rally-yellow); border: 1px solid var(--rally-yellow);">⏳ Cargando clima...</div>';
-
-      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(loc.query)}&units=metric&lang=es&appid=${OWM_API_KEY}`)
-        .then(r => {
-          if (!r.ok) throw new Error('Error API');
-          return r.json();
-        })
-        .then(data => {
-          if (data.cod !== 200) throw new Error('Error API');
-
-          const newCity = {
-            id: data.id,
-            query: loc.query,
-            name: loc.nombre,
-            temp: Math.round(data.main.temp),
-            feelsLike: Math.round(data.main.feels_like),
-            humidity: data.main.humidity,
-            wind: Math.round(data.wind.speed * 3.6),
-            condition: data.weather[0].description,
-            icon: data.weather[0].icon,
-            updatedAt: Date.now()
-          };
-
-          weatherData.push(newCity);
-          localStorage.setItem('rallyWeather', JSON.stringify(weatherData));
-          renderWeather();
-
-          document.getElementById('weatherMsg').innerHTML = '<div class="msg msg-success">✅ Clima de ' + loc.nombre + ' agregado</div>';
-          select.value = '';
-
-          setTimeout(() => {
-            closeModal('weatherModal');
-            document.getElementById('weatherMsg').innerHTML = '';
-          }, 1500);
-        })
-        .catch(err => {
-          document.getElementById('weatherMsg').innerHTML = '<div class="msg msg-error">❌ Error al cargar el clima. Verificá la localidad.</div>';
-        });
-    }
-
-    function getWeatherIcon(iconCode) {
-      return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-    }
-
-    function renderWeather() {
-      const container = document.getElementById('weatherStrip');
-      container.innerHTML = '';
-
-      if (weatherData.length === 0) {
-        container.innerHTML = '<div class="weather-strip-empty">🌤️ Agregá localidades desde el botón ⚙</div>';
-        return;
-      }
-
-      weatherData.forEach((city, index) => {
-        const card = document.createElement('div');
-        card.className = 'weather-mini';
-        card.innerHTML = `
-        <button class="delete-weather" onclick="deleteWeather(${index})">✕</button>
-        <img src="${getWeatherIcon(city.icon)}" alt="${city.condition}">
-        <div class="weather-mini-info">
-          <div class="weather-mini-city">📍 ${city.name}</div>
-          <div class="weather-mini-temp">${city.temp}° · ${city.condition}</div>
+    <!-- FOOTER -->
+    <footer style="background: #1a1a1a; color: #fff; padding: 25px 20px; text-align: center; margin-top: 40px; border-top: 3px solid #d9534f;">
+        <div style="margin-bottom: 15px;">
+            <p style="margin: 0 0 10px 0; font-size: 0.9rem; letter-spacing: 0.5px;">En asociación con:</p>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+                <img src="logo.png" alt="Logo 1" style="height: 45px; width: auto; object-fit: contain;">
+                <span style="font-size: 1.2rem; font-weight: bold; color: #d9534f;">&</span>
+                <img src="logo2.png" alt="Logo 2" style="height: 45px; width: auto; object-fit: contain;">
+            </div>
         </div>
-      `;
-        container.appendChild(card);
-      });
-    }
+        <p style="margin: 0; font-size: 0.85rem; opacity: 0.75;">&copy; 2026 Portal de Noticias. Todos los derechos reservados.</p>
+    </footer>
 
-    function deleteWeather(index) {
-      if (confirm('¿Eliminar esta localidad?')) {
-        weatherData.splice(index, 1);
-        localStorage.setItem('rallyWeather', JSON.stringify(weatherData));
-        renderWeather();
-      }
-    }
+    <!-- MODAL DE NOTICIA COMPLETA -->
+    <div id="modal-noticia" class="modal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center;">
+        <div class="modal-content" style="background-color: #fefefe; margin: auto; padding: 20px; border: 1px solid #888; width: 90%; max-width: 700px; border-radius: 8px; position: relative; max-height: 90vh; overflow-y: auto;">
+            <span class="close-btn" onclick="cerrarNoticia()" style="position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+            <span id="modal-categoria" class="badge" style="background: #d9534f; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;"></span>
+            <span id="modal-fecha" style="font-size: 0.75rem; color: #d9534f; display: block; margin: 8px 0 12px 0; font-weight: bold;"></span>
+            <h2 id="modal-titulo" style="margin-bottom: 15px; font-size: 1.4rem;"></h2>
+            <img id="modal-imagen" src="" alt="" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 6px; margin-bottom: 15px;">
+            <p id="modal-cuerpo" style="line-height: 1.6; color: #333; font-size: 0.95rem; white-space: pre-wrap;"></p>
+        </div>
+    </div>
 
-    // ============ VIDEOS FACEBOOK ============
-    let videosData = JSON.parse(localStorage.getItem('rallyVideos') || '[]');
+    <!-- REPRODUCTOR DE RADIO FLOTANTE -->
+    <div id="radio-modal-flotante" class="radio-flotante-container">
+        <div id="radio-header-drag" class="radio-flotante-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="logo.png" alt="Logo" style="width: 30px; height: 30px; object-fit: contain; border-radius: 4px;">
+                <span style="font-weight: bold;">Radio en Vivo</span>
+            </div>
+            <span class="radio-flotante-close" onclick="cerrarPlayer()" style="cursor: pointer; font-size: 1.2rem;">&times;</span>
+        </div>
+        <div class="radio-flotante-body" style="padding: 15px;">
+            <audio id="audio-stream" controls autoplay style="width: 100%;">
+                <source src="https://stream.radiosmundiales.com/stream/claudio" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            <div style="margin-top: 10px; text-align: center;">
+              <label for="volumeSlider" style="font-size: 0.8rem; color: #555; display: block; margin-bottom: 4px;">Volumen: <span id="volumeValue">40</span>%</label>
+              <input type="range" id="volumeSlider" min="0" max="100" value="40" style="width: 100%; cursor: pointer;" oninput="cambiarVolumen(this.value)">
+            </div>
+        </div>
+    </div>
 
-    function updateVideoLimitMsg() {
-      const remaining = 3 - videosData.length;
-      const msgDiv = document.getElementById('videoLimitMsg');
-      if (remaining <= 0) {
-        msgDiv.innerHTML = '<div class="msg msg-error">⚠️ Límite alcanzado: máximo 3 videos. Eliminá uno para agregar otro.</div>';
-      } else {
-        msgDiv.innerHTML = `<div class="msg" style="background: rgba(255,215,0,0.1); color: var(--rally-yellow); border: 1px solid var(--rally-yellow);">📊 Espacios disponibles: ${remaining}/3</div>`;
-      }
-    }
+    <!-- VENTANA FLOTANTE PARA OTRAS LOCALIDADES -->
+    <div id="modal-otras-loc" class="modal-loc-container" style="display: none;">
+        <div class="modal-loc-content">
+            <div class="modal-loc-header">
+                <h3>Clima - Más Localidades de San Luis</h3>
+                <span class="modal-loc-close" onclick="cerrarModalOtrasLoc()">&times;</span>
+            </div>
+            <div class="modal-loc-body">
+                <div class="modal-loc-grid" id="grid-otras-loc">
+                    <div class="weather-item">Cargando localidades...</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    function getFacebookEmbedUrl(url) {
-      let cleanUrl = url.trim();
-      if (cleanUrl.includes('facebook.com/plugins/video.php')) return cleanUrl;
-      return 'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(cleanUrl) + '&show_text=false&width=360&height=640&app_id=';
-    }
+    <!-- SCRIPT DE CLIMA -->
+    <script>
+        const apiKey = 'e275965fe86eeeabba320d7b99bb4faf';
+        const cities = ["San Luis", "Villa Mercedes", "Merlo", "La Punta", "Juana Koslay", "El Trapiche"];
 
-    function addVideo() {
-      if (videosData.length >= 3) {
-        document.getElementById('videoMsg').innerHTML = '<div class="msg msg-error">⚠️ Límite de 3 videos alcanzado</div>';
-        return;
-      }
+        async function loadWeather() {
+            const tickerContainer = document.getElementById('weather-ticker');
+            if(!tickerContainer) return;
+            tickerContainer.innerHTML = '';
 
-      const title = document.getElementById('videoTitle').value.trim();
-      const url = document.getElementById('videoUrl').value.trim();
+            for (const city of cities) {
+                try {
+                    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},AR&units=metric&lang=es&appid=${apiKey}`);
+                    if (!response.ok) continue;
+                    const data = await response.json();
+                    
+                    const temp = Math.round(data.main.temp);
+                    let icon = '🌡️';
+                    const id = data.weather[0].id;
+                    if (id >= 200 && id < 300) icon = '⛈️';
+                    else if (id >= 300 && id < 600) icon = '🌧️';
+                    else if (id >= 600 && id < 700) icon = '❄️';
+                    else if (id >= 700 && id < 800) icon = '🌫️';
+                    else if (id === 800) icon = '☀️';
+                    else if (id > 800) icon = '☁️';
 
-      if (!title || !url) {
-        document.getElementById('videoMsg').innerHTML = '<div class="msg msg-error">⚠️ Completá todos los campos</div>';
-        return;
-      }
-
-      if (!url.includes('facebook.com')) {
-        document.getElementById('videoMsg').innerHTML = '<div class="msg msg-error">⚠️ La URL debe ser de Facebook</div>';
-        return;
-      }
-
-      const newVideo = {
-        title: title,
-        url: url,
-        embedUrl: getFacebookEmbedUrl(url),
-        addedAt: Date.now()
-      };
-
-      videosData.push(newVideo);
-      localStorage.setItem('rallyVideos', JSON.stringify(videosData));
-      renderVideos();
-
-      document.getElementById('videoMsg').innerHTML = '<div class="msg msg-success">✅ Video publicado correctamente</div>';
-      document.getElementById('videoTitle').value = '';
-      document.getElementById('videoUrl').value = '';
-
-      setTimeout(() => {
-        closeModal('videoModal');
-        document.getElementById('videoMsg').innerHTML = '';
-      }, 1500);
-    }
-
-    function renderVideos() {
-      const container = document.getElementById('videosGrid');
-      container.innerHTML = '';
-
-      if (videosData.length === 0) {
-        container.innerHTML = '<div class="videos-empty">📹 No hay videos cargados. El administrador puede agregar videos desde el panel ⚙</div>';
-        return;
-      }
-
-      videosData.forEach((video, index) => {
-        const card = document.createElement('div');
-        card.className = 'video-card';
-        card.innerHTML = `
-        <button class="delete-btn" onclick="deleteVideo(${index})">✕</button>
-        <iframe src="${video.embedUrl}" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" scrolling="no" frameborder="0"></iframe>
-      `;
-        container.appendChild(card);
-      });
-    }
-
-    function deleteVideo(index) {
-      if (confirm('¿Eliminar este video?')) {
-        videosData.splice(index, 1);
-        localStorage.setItem('rallyVideos', JSON.stringify(videosData));
-        renderVideos();
-      }
-    }
-
-    // ============ PUBLICIDAD ============
-    let adsData = JSON.parse(localStorage.getItem('rallyAds') || '{}');
-
-    function saveAd() {
-      const position = document.getElementById('adPosition').value;
-      const image = document.getElementById('adImage').value.trim();
-      const link = document.getElementById('adLink').value.trim();
-      const text = document.getElementById('adText').value.trim();
-
-      if (!image) {
-        document.getElementById('adMsg').innerHTML = '<div class="msg msg-error">⚠️ Ingresá la URL de la imagen</div>';
-        return;
-      }
-
-      adsData[position] = { image, link, text };
-      localStorage.setItem('rallyAds', JSON.stringify(adsData));
-      renderAds();
-
-      document.getElementById('adMsg').innerHTML = '<div class="msg msg-success">✅ Publicidad guardada</div>';
-      setTimeout(() => {
-        closeModal('adModal');
-        document.getElementById('adMsg').innerHTML = '';
-      }, 1500);
-    }
-
-    function deleteAd(index) {
-      if (confirm('¿Eliminar esta publicidad?')) {
-        delete adsData[index];
-        localStorage.setItem('rallyAds', JSON.stringify(adsData));
-        renderAds();
-      }
-    }
-
-    function handleAdClick(index) {
-      const ad = adsData[index];
-      if (ad && ad.link) {
-        window.open(ad.link, '_blank');
-      }
-    }
-
-    function renderAds() {
-      const banners = document.querySelectorAll('.ad-banner');
-      banners.forEach((banner, index) => {
-        const ad = adsData[index];
-        if (ad && ad.image) {
-          banner.classList.add('has-content');
-          banner.style.backgroundImage = `url('${ad.image}')`;
-          banner.style.backgroundSize = 'cover';
-          banner.style.backgroundPosition = 'center';
-          const placeholder = banner.querySelector('.ad-placeholder');
-          if (placeholder) placeholder.style.display = 'none';
-        } else {
-          banner.classList.remove('has-content');
-          banner.style.backgroundImage = '';
-          const placeholder = banner.querySelector('.ad-placeholder');
-          if (placeholder) placeholder.style.display = 'flex';
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'weather-item';
+                    itemDiv.innerHTML = `${city}: <span>${temp}°C</span> ${icon}`;
+                    tickerContainer.appendChild(itemDiv);
+                } catch (error) {
+                    console.error(`Error cargando clima para ${city}:`, error);
+                }
+            }
         }
-      });
-    }
 
-    // ============ SMOOTH SCROLL ============
-    document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          document.getElementById('navMenu').classList.remove('active');
+        document.addEventListener('DOMContentLoaded', loadWeather);
+    </script>
+
+    <!-- PWA & SERVICE WORKER -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .catch(err => console.error('Error registrando Service Worker:', err));
+            });
         }
-      });
-    });
 
-    // ============ INIT ============
+        let deferredPrompt = null;
+        const btnInstalar = document.getElementById('btn-instalar');
 
-    // ============ NEWS SYSTEM ============
-    let newsData = [];
-    const sourceNames = {
-      'minutouno.com': 'Minuto Uno',
-      'clarin.com': 'Clarín',
-      'tn.com.ar': 'TN',
-      'viapais.com.ar': 'Vía País',
-      'elchorrillero.com': 'El Chorrillero',
-      'agenciasanluis.com': 'Agencia San Luis',
-      'radiomitre.cienradios.com': 'Mitre',
-      'cadena3.com': 'Cadena 3',
-      'infobae.com': 'Infobae',
-      'eldocetv.com': 'Canal 12',
-      'ole.com.ar': 'Olé',
-      'puntal.com.ar': 'Puntal',
-      'lavoz.com.ar': 'La Voz',
-      'cordobabureau.com.ar': 'Córdoba Bureau',
-      'traslasierra.com.ar': 'Traslasierra',
-      'villadoresnoticias': 'Villa Dolores'
-    };
-
-    function getSourceName(url) {
-      for (const key in sourceNames) {
-        if (url.includes(key)) return sourceNames[key];
-      }
-      return 'Noticias';
-    }
-
-    async function cargarNoticias() {
-      const grid = document.getElementById('news-grid');
-      if (!grid) return;
-
-      const sources = [
-        // Nacionales
-
-        'https://www.clarin.com/rss/lo-ultimo/',
-        'https://tn.com.ar/rss.xml',
-        'https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml',
-        'https://www.ole.com.ar/rss/',
-        // Córdoba y región
-
-        // Traslasierra / locales
-        'https://agenciasanluis.com/feed/',
-      ];
-
-      newsData = [];
-
-      const fetches = sources.map(url => {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 8000);
-        return fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(url), { signal: controller.signal })
-          .then(res => res.json())
-          .then(data => { clearTimeout(timeout); return { url, data }; })
-          .catch(() => ({ url, data: null }));
-      });
-
-      const results = await Promise.all(fetches);
-
-      const working = results.filter(({ data }) => data && data.status === 'ok' && data.items && data.items.length > 0);
-
-      if (working.length === 0) {
-        grid.innerHTML = '<p style="color:#ff6b6b; text-align: center; width: 100%;">No se pudieron cargar las noticias. Intenta de nuevo más tarde.</p>';
-        return;
-      }
-
-      working.forEach(({ url, data }) => {
-        data.items.slice(0, 3).forEach(item => {   // 3 noticias por fuente en lugar de 2
-          newsData.push({ ...item, _sourceName: getSourceName(url) });
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if(btnInstalar) btnInstalar.classList.add('visible');
         });
-      });
 
-      // Ordenar por fecha si está disponible, y luego mezclar
-      newsData = newsData
-        .sort((a, b) => new Date(b.pubDate || 0) - new Date(a.pubDate || 0))
-        .slice(0, 30);  // Máximo 30 noticias para no saturar el grid
+        if(btnInstalar) {
+            btnInstalar.addEventListener('click', async () => {
+                if (!deferredPrompt) return;
+                btnInstalar.disabled = true;
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                btnInstalar.classList.remove('visible');
+            });
+        }
 
-      grid.innerHTML = '';
-      newsData.forEach((item, idx) => {
-        let imgUrl = item.thumbnail || (item.enclosure && item.enclosure.link) || 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-        const card = document.createElement('div');
-        card.className = 'news-card';
-        card.style.cssText = 'animation-delay:' + (idx * 0.1) + 's; cursor:pointer;';
-        card.onclick = function () { openNews(idx); };
-        card.innerHTML = '<div class="news-card__img-container"><img src="' + imgUrl + '" alt="Noticia" class="news-card__image" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80\'"><div class="news-card__overlay">Leer m\u00e1s</div></div><div class="news-card__content"><span class="news-card__source">' + item._sourceName + '</span><h3 class="news-card__title">' + item.title + '</h3></div>';
-        grid.appendChild(card);
-      });
-    }
+        window.addEventListener('appinstalled', () => {
+            if(btnInstalar) btnInstalar.classList.remove('visible');
+            deferredPrompt = null;
+        });
 
-    function openNews(idx) {
-      const item = newsData[idx];
-      document.getElementById('news-iframe').src = item.link;
-      const reader = document.getElementById('news-reader');
-      reader.style.display = 'flex';
-    }
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+            if(btnInstalar) btnInstalar.classList.remove('visible');
+        }
+    </script>
 
-    const btnBackNews = document.getElementById('btn-back-news');
-    if (btnBackNews) {
-      btnBackNews.onclick = () => {
-        document.getElementById('news-reader').style.display = 'none';
-        document.getElementById('news-iframe').src = '';
-      };
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      cargarNoticias();
-      // ============ VIDEO FEED (Google Sheets) ============
-    });
-  </script>
-
-  <script src="clima.js"></script>
-  <script src="banners.js"></script>
-  <script src="video-feed.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (typeof VideoFeed !== 'undefined') {
-        VideoFeed.init('rally', '#fb-rally-videos', { limit: 6 });
-        VideoFeed.init('power', '#fb-power-videos', { limit: 3 });
-      }
-    });
-  </script>
+    <script src="js/main.js"></script>
 </body>
-
 </html>
