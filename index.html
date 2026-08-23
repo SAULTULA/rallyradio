@@ -5,6 +5,7 @@
 
   <!-- Icono genérico para evitar el error 404 del favicon -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="manifest.json">
 
   <link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&family=Roboto:wght@400;700&display=swap"
     rel="stylesheet">
@@ -107,6 +108,37 @@
       color: white;
       font-size: 1.5rem;
       cursor: pointer;
+    }
+
+    .install-btn {
+      background: linear-gradient(135deg, var(--rally-red) 0%, #ff5e62 100%);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      text-transform: uppercase;
+      box-shadow: 0 10px 20px rgba(227, 6, 19, 0.4), inset 0 2px 5px rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      letter-spacing: 1px;
+      margin-top: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .install-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 25px rgba(227, 6, 19, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .install-btn::before {
+      content: '📲';
+      font-size: 1.3rem;
     }
 
     /* HERO */
@@ -1127,6 +1159,7 @@
         <h1 class="hero-title">RALLY RADIO</h1>
         <p class="hero-subtitle">🏁 Direccion y Coordinacion  Alberto Panella🏁</p>
         <p class="hero-location">📍 Panella Producciones · Villa Dolores, Córdoba</p>
+        <button id="installBtn" class="install-btn">Instalar App</button>
         <div class="social-header">
           <a href="https://www.facebook.com/share/1DcYAJzbL2/" target="_blank"
             class="social-header__link social-header__link--facebook" title="Beto Panella">
@@ -1831,6 +1864,55 @@
         VideoFeed.init('rally', '#fb-rally-videos', { limit: 6 });
         VideoFeed.init('power', '#fb-power-videos', { limit: 3 });
       }
+    });
+
+    // ============ PWA / SERVICE WORKER ============
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(registration => {
+            console.log('ServiceWorker registrado con éxito:', registration.scope);
+          })
+          .catch(err => {
+            console.log('El registro de ServiceWorker falló:', err);
+          });
+      });
+    }
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+
+    // Ocultar si ya está instalada
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+      installBtn.style.display = 'none';
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevenir la mini-info bar en móvil
+      e.preventDefault();
+      // Guardar el evento para poder usarlo más tarde
+      deferredPrompt = e;
+      // Asegurar que el botón se muestre si estaba oculto
+      installBtn.style.display = 'inline-flex';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        // Mostrar el prompt de instalación
+        deferredPrompt.prompt();
+        // Esperar a que el usuario responda
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        // Limpiar el prompt porque solo se puede usar una vez
+        deferredPrompt = null;
+      } else {
+        alert('Para instalar la App: toca los tres puntos (Menú) en tu navegador y selecciona "Agregar a la pantalla principal" o "Instalar aplicación".');
+      }
+    });
+
+    window.addEventListener('appinstalled', (evt) => {
+      console.log('App instalada con éxito');
+      installBtn.style.display = 'none';
     });
   </script>
 </body>

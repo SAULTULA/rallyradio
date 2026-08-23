@@ -1,0 +1,21 @@
+{
+  "name": "Rally Radio",
+  "short_name": "Rally Radio",
+  "description": "La radio online líder en cobertura del rally argentino",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#e30613",
+  "icons": [
+    {
+      "src": "./favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "./ksm.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
