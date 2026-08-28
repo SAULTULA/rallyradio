@@ -1,6 +1,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="r9WmqHoXJiTEOrDDGcQs4cU8yInJsvTRhrrsLDr8KV4" />
   <title>Rally Radio - Panella Producciones | Villa Dolores, Córdoba</title>
 
   <!-- Icono genérico para evitar el error 404 del favicon -->
@@ -1130,6 +1131,8 @@
 </head>
 
 <body>
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v19.0" nonce="abc123xy"></script>
 
   <header>
     <div class="header-inner">
@@ -1289,8 +1292,23 @@
       <div class="section-header">
         <h2 class="section-title">📱 REDES SOCIALES</h2>
       </div>
-      <!-- Un solo contenedor con la clase grid-videos-rally -->
-      <div id="fb-rally-videos" class="grid-videos-rally"></div>
+      
+      <!-- Plugin Oficial de Facebook para Radio Rally -->
+      <div id="fb-rally-plugin" style="text-align: center; overflow: hidden; border-radius: 12px; background: white;">
+        <div class="fb-page" 
+             data-href="https://www.facebook.com/profile.php?id=100063763114582" 
+             data-tabs="timeline" 
+             data-width="350" 
+             data-height="600" 
+             data-small-header="false" 
+             data-adapt-container-width="true" 
+             data-hide-cover="false" 
+             data-show-facepile="false">
+          <blockquote cite="https://www.facebook.com/profile.php?id=100063763114582" class="fb-xfbml-parse-ignore">
+            <a href="https://www.facebook.com/profile.php?id=100063763114582">Radio Rally</a>
+          </blockquote>
+        </div>
+      </div>
     </div>
 
     <!-- PUBLICIDADES COLUMNA -->
@@ -1314,7 +1332,22 @@
       <div>
         <p style="font-size:0.75rem;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Radio
           Power 104.1</p>
-        <div id="fb-power-videos"></div>
+        <!-- Plugin Oficial de Facebook para Radio Power -->
+        <div id="fb-power-plugin" style="background: white; border-radius: 12px; overflow: hidden;">
+          <div class="fb-page" 
+               data-href="https://www.facebook.com/power104.1" 
+               data-tabs="timeline" 
+               data-width="350" 
+               data-height="600" 
+               data-small-header="false" 
+               data-adapt-container-width="true" 
+               data-hide-cover="false" 
+               data-show-facepile="false">
+            <blockquote cite="https://www.facebook.com/power104.1" class="fb-xfbml-parse-ignore">
+              <a href="https://www.facebook.com/power104.1">Radio Power 104.1</a>
+            </blockquote>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1857,13 +1890,9 @@
 
   <script src="clima.js"></script>
   <script src="banners.js"></script>
-  <script src="video-feed.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      if (typeof VideoFeed !== 'undefined') {
-        VideoFeed.init('rally', '#fb-rally-videos', { limit: 6 });
-        VideoFeed.init('power', '#fb-power-videos', { limit: 3 });
-      }
+      // El plugin de Facebook se inicializa solo
     });
 
     // ============ PWA / SERVICE WORKER ============
