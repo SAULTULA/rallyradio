@@ -48,9 +48,7 @@ const BannersWidget = (() => {
           </a>
         `;
 
-        if (index === 0) {
-          bannerHtml += `\n          <iframe src="https://gente-de-medios.vercel.app/widget?id=rallyradio" width="280" height="480" frameborder="0" scrolling="no" style="border:none; overflow:hidden; border-radius:8px; margin: 0 auto; display: block;"></iframe>`;
-        }
+
 
         return bannerHtml;
       }).join('');

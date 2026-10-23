@@ -225,15 +225,28 @@
       text-align: center;
     }
 
-    .logo-main {
+    /* Marco circular oscuro que envuelve al logo */
+    .logo-frame {
       width: 320px;
       height: 320px;
       border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 60px rgba(227, 6, 19, 0.6), 0 0 100px rgba(255, 215, 0, 0.3);
+      background: radial-gradient(circle, #1c0a0a 0%, #0d0d0d 55%, #000 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+      border: 6px solid var(--rally-red);
+      box-shadow: 0 0 60px rgba(227, 6, 19, 0.7), 0 0 120px rgba(227, 6, 19, 0.3);
       animation: pulse 3s ease-in-out infinite;
-      border: 5px solid var(--rally-red);
-      background: white;
+    }
+
+    .logo-main {
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      object-fit: contain;
+      background: transparent;
     }
 
     @keyframes pulse {
@@ -564,13 +577,13 @@
       border-radius: 2px;
     }
 
-    .videos-grid {
+    .admin-videos-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 15px;
     }
 
-    .video-card {
+    .admin-video-card {
       background: #1a1a1a;
       border-radius: 12px;
       overflow: hidden;
@@ -580,19 +593,19 @@
       aspect-ratio: 9/16;
     }
 
-    .video-card:hover {
+    .admin-video-card:hover {
       border-color: var(--rally-red);
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(227, 6, 19, 0.3);
     }
 
-    .video-card iframe {
+    .admin-video-card iframe {
       width: 100%;
       height: 100%;
       border: none;
     }
 
-    .video-card .delete-btn {
+    .admin-video-card .delete-btn {
       position: absolute;
       top: 8px;
       right: 8px;
@@ -608,7 +621,7 @@
       display: none;
     }
 
-    .admin-mode .video-card .delete-btn {
+    .admin-mode .admin-video-card .delete-btn {
       display: block;
     }
 
@@ -618,6 +631,11 @@
       padding: 40px 20px;
       grid-column: 1/-1;
       font-size: 0.95rem;
+      display: none;
+    }
+
+    .admin-mode .videos-empty {
+      display: block;
     }
 
     /* PUBLICIDADES COLUMNA */
@@ -1022,9 +1040,14 @@
         height: 150px;
       }
 
+      .logo-frame {
+        width: 240px;
+        height: 240px;
+      }
+
       .logo-main {
-        width: 250px;
-        height: 250px;
+        width: 215px;
+        height: 215px;
       }
 
       .hero-title {
@@ -1035,7 +1058,7 @@
         grid-template-columns: 1fr;
       }
 
-      .videos-grid {
+      .admin-videos-grid {
         grid-template-columns: 1fr;
         max-width: 360px;
         margin: 0 auto;
@@ -1158,7 +1181,9 @@
       </div>
 
       <div class="logo-container">
-        <img src="assets/logo.png" alt="Rally Radio Logo" class="logo-main">
+        <div class="logo-frame">
+          <img src="assets/pp.png" alt="Rally Radio Logo" class="logo-main">
+        </div>
         <h1 class="hero-title">RALLY RADIO</h1>
         <p class="hero-subtitle">🏁 Direccion y Coordinacion  Alberto Panella🏁</p>
         <p class="hero-location">📍 Panella Producciones · Villa Dolores, Córdoba</p>
@@ -1214,9 +1239,7 @@
       <span>🔊</span>
       <input type="range" id="volumeSlider" min="0" max="100" value="70" oninput="changeVolume(this.value)">
     </div>
-    <audio id="radioStream" preload="none">
-      <source src="https://stream.radiosmundiales.com:9210/stream" type="audio/mpeg">
-    </audio>
+    <audio id="radioStream" preload="none" src="https://api.condoristream.com/stream/rally"></audio>
   </div>
 
   <!-- BOTÓN ADMIN FIJO -->
@@ -1251,6 +1274,23 @@
   </div>
 
   <!-- MODAL VIDEO -->
+  <div class="modal-overlay" id="videoModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('videoModal')">✕</button>
+      <h2>📹 Agregar Video de Facebook</h2>
+      <div id="videoLimitMsg"></div>
+      <div class="form-group">
+        <label>Título del Video</label>
+        <input type="text" id="videoTitle" placeholder="Ej: Entrevista exclusiva">
+      </div>
+      <div class="form-group">
+        <label>URL del Video de Facebook</label>
+        <input type="url" id="videoUrl" placeholder="https://www.facebook.com/...">
+      </div>
+      <div id="videoMsg"></div>
+      <button class="btn btn-block" onclick="addVideo()">💾 Guardar Video</button>
+    </div>
+  </div>
 
   <!-- MODAL PUBLICIDAD -->
   <div class="modal-overlay" id="adModal">
@@ -1293,22 +1333,8 @@
         <h2 class="section-title">📱 REDES SOCIALES</h2>
       </div>
       
-      <!-- Plugin Oficial de Facebook para Radio Rally -->
-      <div id="fb-rally-plugin" style="text-align: center; overflow: hidden; border-radius: 12px; background: white;">
-        <div class="fb-page" 
-             data-href="https://www.facebook.com/profile.php?id=100063763114582" 
-             data-tabs="timeline" 
-             data-width="350" 
-             data-height="600" 
-             data-small-header="false" 
-             data-adapt-container-width="true" 
-             data-hide-cover="false" 
-             data-show-facepile="false">
-          <blockquote cite="https://www.facebook.com/profile.php?id=100063763114582" class="fb-xfbml-parse-ignore">
-            <a href="https://www.facebook.com/profile.php?id=100063763114582">Radio Rally</a>
-          </blockquote>
-        </div>
-      </div>
+      <div id="videosGrid" class="admin-videos-grid"></div>
+      <div id="fb-rally-videos"></div>
     </div>
 
     <!-- PUBLICIDADES COLUMNA -->
@@ -1332,22 +1358,8 @@
       <div>
         <p style="font-size:0.75rem;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Radio
           Power 104.1</p>
-        <!-- Plugin Oficial de Facebook para Radio Power -->
-        <div id="fb-power-plugin" style="background: white; border-radius: 12px; overflow: hidden;">
-          <div class="fb-page" 
-               data-href="https://www.facebook.com/power104.1" 
-               data-tabs="timeline" 
-               data-width="350" 
-               data-height="600" 
-               data-small-header="false" 
-               data-adapt-container-width="true" 
-               data-hide-cover="false" 
-               data-show-facepile="false">
-            <blockquote cite="https://www.facebook.com/power104.1" class="fb-xfbml-parse-ignore">
-              <a href="https://www.facebook.com/power104.1">Radio Power 104.1</a>
-            </blockquote>
-          </div>
-        </div>
+        <!-- Plugin Oficial de Facebook para Radio Power (Reemplazado por Cards) -->
+        <div id="fb-power-videos"></div>
       </div>
     </div>
   </section>
@@ -1588,6 +1600,7 @@
 
     function renderWeather() {
       const container = document.getElementById('weatherStrip');
+      if (!container) return;
       container.innerHTML = '';
 
       if (weatherData.length === 0) {
@@ -1688,7 +1701,7 @@
 
       videosData.forEach((video, index) => {
         const card = document.createElement('div');
-        card.className = 'video-card';
+        card.className = 'admin-video-card';
         card.innerHTML = `
         <button class="delete-btn" onclick="deleteVideo(${index})">✕</button>
         <iframe src="${video.embedUrl}" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" scrolling="no" frameborder="0"></iframe>
@@ -1778,6 +1791,14 @@
     });
 
     // ============ INIT ============
+    document.addEventListener('DOMContentLoaded', () => {
+      renderVideos();
+      renderAds();
+      if (typeof VideoFeed !== 'undefined') {
+        VideoFeed.init('rally', '#fb-rally-videos', { limit: 9 });
+        VideoFeed.init('power', '#fb-power-videos', { limit: 9 });
+      }
+    });
 
     // ============ NEWS SYSTEM ============
     let newsData = [];
@@ -1827,11 +1848,11 @@
       newsData = [];
 
       const fetches = sources.map(url => {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 8000);
-        return fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(url), { signal: controller.signal })
+        // Usamos nuestro propio endpoint /api/news para evitar errores CORS.
+        // El servidor hace la petición al feed RSS y nos devuelve JSON limpio.
+        return fetch('/api/news?url=' + encodeURIComponent(url))
           .then(res => res.json())
-          .then(data => { clearTimeout(timeout); return { url, data }; })
+          .then(data => ({ url, data }))
           .catch(() => ({ url, data: null }));
       });
 
@@ -1890,6 +1911,7 @@
 
   <script src="clima.js"></script>
   <script src="banners.js"></script>
+  <script src="video-feed.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // El plugin de Facebook se inicializa solo

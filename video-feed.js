@@ -1,39 +1,62 @@
-﻿/**
+/**
  * video-feed.js
- * MÃ³dulo de Video Feed â€” Panella Producciones
+ * Módulo de Video Feed — Panella Producciones
  * Consume el endpoint de Google Apps Script y renderiza video cards.
- * 
+ * Se refresca automáticamente cada 30 minutos para mostrar novedades.
+ *
  * USO:
- *   VideoFeed.init('panella', '#fb-rally-videos', { limit: 4 });
- *   VideoFeed.init('power',   '#fb-power-videos',   { limit: 2 });
+ *   VideoFeed.init('rally', '#fb-rally-videos', { limit: 9 });
+ *   VideoFeed.init('power', '#fb-power-videos', { limit: 9 });
  */
 
 const VideoFeed = (() => {
 
   // ============================================================
-  //  âš ï¸ REEMPLAZÃ ESTA URL CON LA DE TU WEB APP DE GOOGLE
-  //  (Apps Script â†’ Implementar â†’ Nueva implementaciÃ³n â†’ Web App)
+  //  ENDPOINT — Web App de Google Apps Script
   // ============================================================
   const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyIrGb5p9N9Ek7CVsrByscevLaafW_yGk59zRvsE6q5aynLEqauDIhbPKqxMO99qGk/exec';
 
-  // Cache en memoria por sesiÃ³n
-  const _cache = {};
+  // Intervalo de refresco automático (ms). 30 minutos.
+  const REFRESH_INTERVAL_MS = 30 * 60 * 1000;
+
+  // Registro de timers activos por selector
+  const _timers = new Map();
 
   // ============================================================
-  //  INIT â€” Punto de entrada pÃºblico
+  //  INIT — Punto de entrada público
   // ============================================================
   async function init(pageLabel, containerSelector, options = {}) {
     const container = document.querySelector(containerSelector);
     if (!container) return;
 
-    const limit = options.limit || 3;
+    const limit = options.limit || 9;
+    const refresh = options.refresh !== false; // true por defecto
 
-    // Mostrar loader
-    container.innerHTML = `
-      <div class="video-feed--loader">
-        <div class="video-feed__spinner"></div>
-        Cargando videos...
-      </div>`;
+    // Primera carga
+    await _load(pageLabel, container, limit);
+
+    // Auto-refresco cada 30 minutos
+    if (refresh) {
+      if (_timers.has(containerSelector)) {
+        clearInterval(_timers.get(containerSelector));
+      }
+      const timer = setInterval(() => _load(pageLabel, container, limit), REFRESH_INTERVAL_MS);
+      _timers.set(containerSelector, timer);
+    }
+  }
+
+  // ============================================================
+  //  CARGA INTERNA
+  // ============================================================
+  async function _load(pageLabel, container, limit) {
+    // Mostrar loader solo si el contenedor no tiene cards aún
+    if (!container.querySelector('.video-feed')) {
+      container.innerHTML = `
+        <div class="video-feed--loader">
+          <div class="video-feed__spinner"></div>
+          Cargando videos...
+        </div>`;
+    }
 
     try {
       const videos = await fetchVideos(pageLabel, limit);
@@ -45,7 +68,7 @@ const VideoFeed = (() => {
 
       container.innerHTML = `<div class="video-feed">${videos.map(_renderCard).join('')}</div>`;
 
-      // Adjuntar eventos
+      // Adjuntar eventos de clic
       container.querySelectorAll('.video-card').forEach((card, idx) => {
         card.addEventListener('click', () => _openModal(videos[idx]));
         card.addEventListener('keydown', e => {
@@ -58,31 +81,25 @@ const VideoFeed = (() => {
 
     } catch (err) {
       console.error('[VideoFeed] Error:', err);
-      container.innerHTML = _renderError();
+      // Solo mostrar error si no había contenido previo
+      if (!container.querySelector('.video-feed')) {
+        container.innerHTML = _renderError();
+      }
     }
   }
 
   // ============================================================
-  //  FETCH con cache
+  //  FETCH — siempre datos frescos (sin caché del navegador)
   // ============================================================
   async function fetchVideos(pageLabel, limit) {
-    const cacheKey = `${pageLabel}_${limit}`;
-    if (_cache[cacheKey]) return _cache[cacheKey];
-
-    // Si el endpoint no estÃ¡ configurado, mostrar instrucciÃ³n
-    if (ENDPOINT.includes('PEGAR_URL')) {
-      console.warn('[VideoFeed] Endpoint no configurado. ConfigurÃ¡ ENDPOINT en video-feed.js');
-      return [];
-    }
-
-    const url = `${ENDPOINT}?page=${encodeURIComponent(pageLabel)}&limit=${limit}`;
+    const ts = Date.now();
+    const url = `${ENDPOINT}?action=getVideos&page=${encodeURIComponent(pageLabel)}&limit=${limit}&_t=${ts}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
-    if (!data.ok) throw new Error(data.error || 'Respuesta invÃ¡lida');
+    if (!data.ok) throw new Error(data.error || 'Respuesta inválida del servidor');
 
-    _cache[cacheKey] = data.videos;
     return data.videos;
   }
 
@@ -94,7 +111,10 @@ const VideoFeed = (() => {
       ? `<img src="${_esc(video.thumbnail)}" alt="${_esc(video.title)}" loading="lazy" onerror="this.parentElement.classList.add('video-card__thumb--no-img'); this.remove();">`
       : '';
 
-    const thumbClass = video.thumbnail ? 'video-card__thumb' : 'video-card__thumb video-card__thumb--no-img';
+    const thumbClass = video.thumbnail
+      ? 'video-card__thumb'
+      : 'video-card__thumb video-card__thumb--no-img';
+
     const date = video.publishedAt ? _formatDate(video.publishedAt) : '';
 
     return `
@@ -119,7 +139,6 @@ const VideoFeed = (() => {
   //  MODAL
   // ============================================================
   function _openModal(video) {
-    // Cerrar modal anterior si existe
     const existing = document.getElementById('vf-modal-overlay');
     if (existing) existing.remove();
 
@@ -127,8 +146,8 @@ const VideoFeed = (() => {
     const embedHtml = hasEmbed
       ? `<iframe src="${_esc(video.embedUrl)}" allowfullscreen scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>`
       : `<div style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;background:#0a0a0a;flex-direction:column;gap:12px;">
-           <p style="color:#aaa;font-size:0.9rem;text-align:center;padding:0 20px;">No hay preview disponible</p>
-           <a href="${_esc(video.videoUrl)}" target="_blank" rel="noopener" style="background:#e30613;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Ver en Facebook â†—</a>
+           <p style="color:#aaa;font-size:0.9rem;text-align:center;padding:0 20px;">No hay preview disponible.</p>
+           <a href="${_esc(video.videoUrl)}" target="_blank" rel="noopener" style="background:#e30613;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Ver en Facebook ↗</a>
          </div>`;
 
     const overlay = document.createElement('div');
@@ -136,7 +155,7 @@ const VideoFeed = (() => {
     overlay.className = 'video-modal-overlay';
     overlay.innerHTML = `
       <div class="video-modal" role="dialog" aria-modal="true" aria-label="${_esc(video.title)}">
-        <button class="video-modal__close" id="vf-modal-close" aria-label="Cerrar">âœ•</button>
+        <button class="video-modal__close" id="vf-modal-close" aria-label="Cerrar">✕</button>
         ${embedHtml}
         <div class="video-modal__title">${_esc(video.title)}</div>
       </div>`;
@@ -158,17 +177,17 @@ const VideoFeed = (() => {
   }
 
   // ============================================================
-  //  ESTADOS VACÃO / ERROR
+  //  ESTADOS VACÍO / ERROR
   // ============================================================
   function _renderEmpty(page) {
     return `<p style="color:#888;text-align:center;padding:30px 0;font-size:0.9rem;">
-      Pronto habrÃ¡ videos de ${page}. Â¡VolvÃ© mÃ¡s tarde!
+      ¡Pronto habrá videos de ${_esc(page)}! Volvé más tarde.
     </p>`;
   }
 
   function _renderError() {
     return `<p style="color:#ff6b6b;text-align:center;padding:30px 0;font-size:0.9rem;">
-      No se pudieron cargar los videos. IntentÃ¡ de nuevo mÃ¡s tarde.
+      No se pudieron cargar los videos. Intentá de nuevo más tarde.
     </p>`;
   }
 
@@ -191,8 +210,7 @@ const VideoFeed = (() => {
     } catch { return ''; }
   }
 
-  // API pÃºblica
+  // API pública
   return { init, fetchVideos };
 
 })();
-
