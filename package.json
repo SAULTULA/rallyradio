@@ -1,0 +1,10 @@
+{
+  "name": "rally-radio-panella",
+  "version": "1.0.0",
+  "description": "Rally Radio — Panella Producciones. Serverless RSS proxy para Vercel.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  }
+}
