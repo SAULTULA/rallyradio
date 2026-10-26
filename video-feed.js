@@ -14,7 +14,7 @@ const VideoFeed = (() => {
   // ============================================================
   //  ENDPOINT — Proxy de Vercel
   // ============================================================
- const ENDPOINT = '/proxy-script';
+  const ENDPOINT = '/proxy-script';
 
   // Intervalo de refresco automático (ms). 30 minutos.
   const REFRESH_INTERVAL_MS = 30 * 60 * 1000;
@@ -107,11 +107,13 @@ const VideoFeed = (() => {
   //  RENDER CARD
   // ============================================================
   function _renderCard(video) {
-    const thumb = video.thumbnail
-      ? `<img src="${_esc(video.thumbnail)}" alt="${_esc(video.title)}" loading="lazy" onerror="this.parentElement.classList.add('video-card__thumb--no-img'); this.remove();">`
+    const thumbSrc = _thumbSrc(video.thumbnail);
+
+    const thumb = thumbSrc
+      ? `<img src="${_esc(thumbSrc)}" alt="${_esc(video.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('video-card__thumb--no-img'); this.remove();">`
       : '';
 
-    const thumbClass = video.thumbnail
+    const thumbClass = thumbSrc
       ? 'video-card__thumb'
       : 'video-card__thumb video-card__thumb--no-img';
 
@@ -194,6 +196,20 @@ const VideoFeed = (() => {
   // ============================================================
   //  UTILS
   // ============================================================
+
+  // Si la miniatura viene proxeada por Facebook (esas URLs vencen),
+  // usa la URL original de YouTube que va dentro del parámetro "url".
+  function _thumbSrc(u) {
+    if (!u) return '';
+    if (u.includes('fbcdn.net/emg')) {
+      const m = u.match(/[?&]url=([^&]+)/);
+      if (m) {
+        try { return decodeURIComponent(m[1]); } catch (e) { /* usar la original */ }
+      }
+    }
+    return u;
+  }
+
   function _esc(str) {
     return String(str || '')
       .replace(/&/g, '&amp;')
