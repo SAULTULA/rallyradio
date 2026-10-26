@@ -4,7 +4,7 @@
  */
 
 const BannersWidget = (() => {
-  const ENDPOINT = '/api/script';
+ const ENDPOINT = '/proxy-script';
 
   async function init(containerSelector) {
     const container = document.querySelector(containerSelector);
