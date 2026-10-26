@@ -12,9 +12,9 @@
 const VideoFeed = (() => {
 
   // ============================================================
-  //  ENDPOINT — Web App de Google Apps Script
+  //  ENDPOINT — Proxy de Vercel
   // ============================================================
-  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyIrGb5p9N9Ek7CVsrByscevLaafW_yGk59zRvsE6q5aynLEqauDIhbPKqxMO99qGk/exec';
+  const ENDPOINT = '/api/script';
 
   // Intervalo de refresco automático (ms). 30 minutos.
   const REFRESH_INTERVAL_MS = 30 * 60 * 1000;
