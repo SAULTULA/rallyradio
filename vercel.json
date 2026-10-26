@@ -5,6 +5,7 @@
   ],
   "functions": {
     "api/news.js": { "memory": 256, "maxDuration": 15 },
-    "api/proxy-script.js": { "memory": 256, "maxDuration": 15 }
+    "api/proxy-script.js": { "memory": 256, "maxDuration": 15 },
+    "api/clima.js": { "memory": 256, "maxDuration": 15 }
   }
 }
