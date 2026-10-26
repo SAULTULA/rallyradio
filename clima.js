@@ -4,7 +4,7 @@
  */
 
 const ClimaWidget = (() => {
-  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyIrGb5p9N9Ek7CVsrByscevLaafW_yGk59zRvsE6q5aynLEqauDIhbPKqxMO99qGk/exec';
+  const ENDPOINT = '/api/script';
 
   async function init(containerSelector) {
     const container = document.querySelector(containerSelector);
@@ -114,10 +114,9 @@ const ClimaWidget = (() => {
   return { init };
 })();
 
-// Inicializacion automÃ¡tica
+// Inicializacion automática
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('clima-container')) {
     ClimaWidget.init('#clima-container');
   }
 });
-
