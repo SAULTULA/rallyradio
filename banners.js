@@ -1,10 +1,10 @@
 /**
  * banners.js
- * MÃ³dulo para consumir Banners desde Google Apps Script (Backend)
+ * Módulo para consumir Banners desde Google Apps Script (Backend)
  */
 
 const BannersWidget = (() => {
-  const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyIrGb5p9N9Ek7CVsrByscevLaafW_yGk59zRvsE6q5aynLEqauDIhbPKqxMO99qGk/exec';
+  const ENDPOINT = '/api/script';
 
   async function init(containerSelector) {
     const container = document.querySelector(containerSelector);
@@ -76,10 +76,9 @@ const BannersWidget = (() => {
   return { init };
 })();
 
-// InicializaciÃ³n automÃ¡tica
+// Inicialización automática
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('banners-container')) {
     BannersWidget.init('#banners-container');
   }
 });
-
