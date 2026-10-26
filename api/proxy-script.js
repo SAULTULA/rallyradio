@@ -1,14 +1,21 @@
-module.exports = async (req, res) => {
-  const SCRIPT_URL =
-    'https://script.google.com/macros/s/AKfycbyIrGb5p9N9Ek7CVsrByscevLaafW_yGk59zRvsE6q5aynLEqauDIhbPKqxMO99qGk/exec';
+export const config = {
+  runtime: 'nodejs',
+};
 
+const SCRIPT_URL =
+  'https://script.google.com/macros/s/AKfycbyIrGb5p9N9Ek7CVsrByscevLaafW_yGk59zRvsE6q5aynLEqauDIhbPKqxMO99qGk/exec';
+
+export default async function handler(req, res) {
   const qs = new URLSearchParams(req.query).toString();
 
   try {
-    const r = await fetch(`${SCRIPT_URL}?${qs}`, { redirect: 'follow' });
+    const r = await fetch(`${SCRIPT_URL}?${qs}`, {
+      redirect: 'follow',
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; RallyRadioBot/1.0)' },
+      signal: AbortSignal.timeout(12000),
+    });
     const text = await r.text();
 
-    // Si Google devolvió HTML (login/403) en vez de JSON, lo reportamos claro
     try {
       JSON.parse(text);
     } catch {
@@ -16,7 +23,7 @@ module.exports = async (req, res) => {
         ok: false,
         error: 'Apps Script no devolvió JSON',
         status: r.status,
-        preview: text.substring(0, 200)
+        preview: text.substring(0, 300),
       });
     }
 
@@ -26,4 +33,4 @@ module.exports = async (req, res) => {
   } catch (e) {
     return res.status(502).json({ ok: false, error: e.message });
   }
-};
+}
