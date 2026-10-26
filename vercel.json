@@ -1,25 +1,10 @@
 {
   "version": 2,
   "rewrites": [
-    {
-      "source": "/proxy-script",
-      "destination": "https://script.google.com/macros/s/AKfycbyIrGb5p9N9Ek7CVsrByscevLaafW_yGk59zRvsE6q5aynLEqauDIhbPKqxMO99qGk/exec"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/proxy-script",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
-      ]
-    }
+    { "source": "/proxy-script", "destination": "/api/proxy-script" }
   ],
   "functions": {
-    "api/news.js": {
-      "memory": 256,
-      "maxDuration": 15
-    }
+    "api/news.js": { "memory": 256, "maxDuration": 15 },
+    "api/proxy-script.js": { "memory": 256, "maxDuration": 15 }
   }
 }
