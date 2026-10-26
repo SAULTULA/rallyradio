@@ -1,7 +1,10 @@
+const CACHE_NAME = 'rallyradio-v1';
+
 // Estrategia: "Network First" (Red primero, si no hay red usa Caché)
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
-  if (new URL(event.request.url).pathname.startsWith('/proxy-script')) return;
+  const path = new URL(event.request.url).pathname;
+  if (path.startsWith('/proxy-script') || path.startsWith('/api/')) return;
 
   event.respondWith(
     fetch(event.request)

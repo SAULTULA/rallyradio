@@ -1555,7 +1555,7 @@
 
       document.getElementById('weatherMsg').innerHTML = '<div class="msg" style="background: rgba(255,215,0,0.1); color: var(--rally-yellow); border: 1px solid var(--rally-yellow);">⏳ Cargando clima...</div>';
 
-      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(loc.query)}&units=metric&lang=es&appid=${OWM_API_KEY}`)
+      fetch(`/api/clima?q=${encodeURIComponent(loc.query)}`)
         .then(r => {
           if (!r.ok) throw new Error('Error API');
           return r.json();
