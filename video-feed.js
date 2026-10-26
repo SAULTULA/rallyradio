@@ -14,7 +14,7 @@ const VideoFeed = (() => {
   // ============================================================
   //  ENDPOINT — Proxy de Vercel
   // ============================================================
-  const ENDPOINT = '/api/script';
+ const ENDPOINT = '/proxy-script';
 
   // Intervalo de refresco automático (ms). 30 minutos.
   const REFRESH_INTERVAL_MS = 30 * 60 * 1000;
